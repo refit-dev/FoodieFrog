@@ -1,3 +1,4 @@
+# DAY - 2
 FoodieFrog - Food Delivery Platform
 🐸 Project Overview
 FoodieFrog is a modern food delivery platform built with Next.js, featuring restaurant listings, cart functionality, order tracking, payment integration, and admin dashboard capabilities.
@@ -39,4 +40,4 @@ Layout - Consistent navigation with theme toggle
 Navbar Component - Reusable navigation with theme controls
 
 ✅ Features Implemented
-Basic Tesing
+Basic Testing with test routes 
