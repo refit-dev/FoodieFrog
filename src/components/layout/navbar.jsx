@@ -16,6 +16,9 @@ export function Navbar() {
             <Link href="/">Home</Link>
           </Button>
           <Button variant="ghost" asChild>
+            <Link href="/faq">FAQs</Link>
+          </Button>
+          <Button variant="ghost" asChild>
             <Link href="/test">Test Page</Link>
           </Button>
           <ThemeToggle />
