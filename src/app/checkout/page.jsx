@@ -51,10 +51,10 @@ export default function CheckoutPage() {
     setLoading(true);
 
     try {
-      const subtotal = getCartTotal();
-      const deliveryFee = restaurant?.deliveryFee || 0;
-      const tax = subtotal * 0.08;
-      const total = subtotal + deliveryFee + tax;
+      const subtotal = Number(getCartTotal()) || 0;
+      const deliveryFee = Number(restaurant?.deliveryFee) || 0;
+      const tax = +(subtotal * 0.08).toFixed(2);
+      const total = +(subtotal + deliveryFee + tax).toFixed(2);
 
       const orderData = {
         restaurantId: restaurant._id,
@@ -62,10 +62,10 @@ export default function CheckoutPage() {
         deliveryAddress: formData.deliveryAddress,
         phoneNumber: formData.phoneNumber,
         specialInstructions: formData.specialInstructions,
-        subtotal: parseFloat(subtotal.toFixed(2)),
-        deliveryFee: parseFloat(deliveryFee.toFixed(2)),
-        tax: parseFloat(tax.toFixed(2)),
-        total: parseFloat(total.toFixed(2))
+        subtotal: parseFloat(subtotal),
+        deliveryFee: parseFloat(deliveryFee),
+        tax: parseFloat(tax),
+        total: parseFloat(total)
       };
 
       const response = await fetch('/api/orders', {
@@ -124,27 +124,27 @@ export default function CheckoutPage() {
     return null;
   }
 
-  const subtotal = getCartTotal();
-  const deliveryFee = restaurant?.deliveryFee || 0;
-  const tax = subtotal * 0.08;
-  const total = subtotal + deliveryFee + tax;
+const subtotal = Number(getCartTotal()) || 0;
+const deliveryFee = Number(restaurant?.deliveryFee) || 0;
+const tax = +(subtotal * 0.08).toFixed(2);
+const total = +(subtotal + deliveryFee + tax).toFixed(2);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Order Summary */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
-            
+
             {/* Restaurant Info */}
             <div className="mb-4 p-3 bg-gray-50 rounded-lg">
               <h3 className="font-medium text-gray-900">{restaurant.name}</h3>
               <p className="text-sm text-gray-600">{restaurant.cuisineType}</p>
             </div>
-            
+
             <div className="space-y-4">
               {items.map(item => (
                 <div key={item._id} className="flex justify-between items-center">
@@ -159,7 +159,7 @@ export default function CheckoutPage() {
                       <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                     </div>
                   </div>
-                  <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-medium">${(item.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
@@ -167,19 +167,19 @@ export default function CheckoutPage() {
             <div className="border-t border-gray-200 mt-4 pt-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>${subtotal}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span>Delivery Fee</span>
-                <span>${deliveryFee.toFixed(2)}</span>
+                <span>${deliveryFee}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span>Tax (8%)</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>${tax}</span>
               </div>
               <div className="flex justify-between font-semibold text-lg border-t border-gray-200 pt-2">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>${total}</span>
               </div>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function CheckoutPage() {
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Delivery Information</h2>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -204,7 +204,7 @@ export default function CheckoutPage() {
                     required
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Phone Number *
@@ -219,7 +219,7 @@ export default function CheckoutPage() {
                     required
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Special Instructions
@@ -247,7 +247,7 @@ export default function CheckoutPage() {
                   Placing Order...
                 </span>
               ) : (
-                `Place Order - $${total.toFixed(2)}`
+                `Place Order - $${total}`
               )}
             </button>
 

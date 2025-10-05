@@ -12,14 +12,14 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 export default function CartSidebar({ isOpen, onClose }) {
-  const { 
-    items, 
-    restaurant, 
-    updateQuantity, 
-    removeItem, 
-    getCartTotal, 
+  const {
+    items,
+    restaurant,
+    updateQuantity,
+    removeItem,
+    getCartTotal,
     getItemCount,
-    clearCart 
+    clearCart
   } = useCart();
   const { data: session } = useSession();
   const router = useRouter();
@@ -34,10 +34,12 @@ export default function CartSidebar({ isOpen, onClose }) {
     onClose();
   };
 
-  const subtotal = getCartTotal();
-  const deliveryFee = restaurant?.deliveryFee || 0;
-  const tax = subtotal * 0.08;
-  const total = subtotal + deliveryFee + tax;
+  const subtotal = Number(getCartTotal()) || 0;
+  const deliveryFee = Number(restaurant?.deliveryFee) || 0;
+  const tax = +(subtotal * 0.08).toFixed(2);
+  const total = +(subtotal + deliveryFee + tax).toFixed(2);
+
+  console.log(subtotal, deliveryFee, tax, total);
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -48,7 +50,7 @@ export default function CartSidebar({ isOpen, onClose }) {
             <div className="flex items-center space-x-2">
               <ShoppingCart className="h-6 w-6 text-primary" />
               <SheetTitle className="text-lg font-semibold">
-                Your Cart 
+                Your Cart
                 <Badge variant="secondary" className="ml-2">
                   {getItemCount()}
                 </Badge>
@@ -103,7 +105,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                                 {item.name}
                               </h4>
                               <p className="text-sm text-muted-foreground">
-                                ${item.price.toFixed(2)}
+                                ${item.price}
                               </p>
                             </div>
                             <Button
@@ -141,7 +143,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               </Button>
                             </div>
                             <span className="font-semibold text-sm">
-                              ${(item.price * item.quantity).toFixed(2)}
+                              ${(item.price * item.quantity)}
                             </span>
                           </div>
                         </div>
@@ -161,33 +163,33 @@ export default function CartSidebar({ isOpen, onClose }) {
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-medium">${subtotal.toFixed(2)}</span>
+                <span className="font-medium">${subtotal}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Delivery Fee</span>
-                <span className="font-medium">${deliveryFee.toFixed(2)}</span>
+                <span className="font-medium">${deliveryFee}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Tax (8%)</span>
-                <span className="font-medium">${tax.toFixed(2)}</span>
+                <span className="font-medium">${tax}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-base font-semibold">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>${total}</span>
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="space-y-2">
-              <Button 
-                onClick={handleCheckout} 
+              <Button
+                onClick={handleCheckout}
                 className="w-full bg-primary hover:bg-primary/90 h-12 text-base font-semibold"
                 size="lg"
               >
                 {session ? 'Proceed to Checkout' : 'Sign In to Checkout'}
               </Button>
-              
+
               <Button
                 onClick={clearCart}
                 variant="outline"
