@@ -5,6 +5,7 @@ import NextAuthProvider from "@/providers/NextAuthProvider";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { CartProvider } from "@/context/CartContext";
 import NavbarWrapper from "@/components/layout/NavbarWrapper";
+import FooterWrapper from "@/components/layout/FooterWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
             >
               <NavbarWrapper />
               <main className="min-h-screen">{children}</main>
+              <FooterWrapper/>
             </ThemeProvider>
           </CartProvider>
         </NextAuthProvider>
