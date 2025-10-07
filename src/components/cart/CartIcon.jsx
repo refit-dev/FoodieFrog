@@ -18,7 +18,7 @@ export default function CartIcon() {
     <>
       <button
         onClick={() => setIsSidebarOpen(true)}
-        className="relative p-2 text-gray-700 hover:text-green-600 transition-colors"
+        className="relative p-2 hover:text-black bg-transparent hover:bg-transparent dark:hover:text-green-500 dark:hover:bg-black/20 rounded-lg"
       >
         <ShoppingCart className="h-6 w-6" />
         {itemCount > 0 && (
