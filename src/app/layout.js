@@ -1,7 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
+import NextAuthProvider from "@/providers/NextAuthProvider";
+import { ThemeProvider } from "@/components/layout/theme-provider";
+import { CartProvider } from "@/context/CartContext";
+import NavbarWrapper from "@/components/layout/NavbarWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,26 +23,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-       <nav className="border-b">
-          <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-            <Link href="/" className="text-2xl font-bold text-green-600">
-              🐸 FoodieFrog
-            </Link>
-            <div className="flex gap-4">
-              <Button variant="ghost" asChild>
-                <Link href="/">Home</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/test">Test Page</Link>
-              </Button>
-            </div>
-          </div>
-        </nav>
-        {children}
+        <NextAuthProvider>
+          <CartProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NavbarWrapper />
+              <main className="min-h-screen">{children}</main>
+            </ThemeProvider>
+          </CartProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

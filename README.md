@@ -1,36 +1,301 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DAY - 2
+FoodieFrog - Food Delivery Platform ZiGNsj8EXxz8xOhj  FoodieFrog_DB
+42533334121-cc7nem9bgig28os3coevh5issbd4s9s1.apps.googleusercontent.com id
+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 secret
 
-## Getting Started
+🐸 Project Overview
+FoodieFrog is a modern food delivery platform built with Next.js, featuring restaurant listings, cart functionality, order tracking, payment integration, and admin dashboard capabilities.
 
-First, run the development server:
+🚀 What's Been Implemented So Far
+✅ Project Setup & Configuration
+Next.js 14 project with App Router
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+JavaScript configuration
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tailwind CSS for styling
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+shadcn/ui component library integration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Dark/Light Theme System with next-themes
 
-## Learn More
+Responsive design setup
 
-To learn more about Next.js, take a look at the following resources:
+✅ Installed shadcn/ui Components
+Button - Various button variants (default, secondary, destructive, outline, ghost)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Card - Container components with header, title, and content
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Input - Form input fields
 
-## Deploy on Vercel
+Label - Form labels for accessibility
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+DropdownMenu - For theme toggle and navigation menus
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+✅ Theme System Implementation
+
+✅ Page Structure
+Homepage (/) - Landing page with platform overview
+
+Test Page (/test) - Component demonstration and testing
+
+Layout - Consistent navigation with theme toggle
+
+Navbar Component - Reusable navigation with theme controls
+
+✅ Features Implemented
+Basic Testing with test routes 
+
+foodie-frog/
+├── 📁 app/
+│   ├── 📁 (auth)/
+│   │   ├── 📁 login/
+│   │   │   └── 📄 page.jsx
+│   │   ├── 📁 register/
+│   │   │   └── 📄 page.jsx
+│   │   └── 📁 restaurant-register/
+│   │       └── 📄 page.jsx
+│   │
+│   ├── 📁 dashboard/
+│   │   ├── 📁 admindashboard/
+│   │   │   ├── 📁 analytics/
+│   │   │   │   └── 📄 page.jsx
+│   │   │   ├── 📁 manage-restaurants/
+│   │   │   │   ├── 📄 page.jsx
+│   │   │   │   └── 📁 [id]/
+│   │   │   │       └── 📄 page.jsx
+│   │   │   ├── 📁 manage-orders/
+│   │   │   │   ├── 📄 page.jsx
+│   │   │   │   └── 📁 [id]/
+│   │   │   │       └── 📄 page.jsx
+│   │   │   └── 📁 manage-users/
+│   │   │       └── 📄 page.jsx
+│   │   │
+│   │   ├── 📁 userdashboard/
+│   │   │   ├── 📁 orders/
+│   │   │   │   ├── 📄 page.jsx
+│   │   │   │   └── 📁 [id]/
+│   │   │   │       └── 📄 page.jsx
+│   │   │   ├── 📁 profile/
+│   │   │   │   └── 📄 page.jsx
+│   │   │   ├── 📁 addresses/
+│   │   │   │   └── 📄 page.jsx
+│   │   │   └── 📄 layout.jsx
+│   │   │
+│   │   └── 📁 restaurantdashboard/
+│   │       ├── 📁 menu/
+│   │       │   ├── 📄 page.jsx
+│   │       │   └── 📁 [id]/
+│   │       │       └── 📄 page.jsx
+│   │       ├── 📁 orders/
+│   │       │   ├── 📄 page.jsx
+│   │       │   └── 📁 [id]/
+│   │       │       └── 📄 page.jsx
+│   │       ├── 📁 analytics/
+│   │       │   └── 📄 page.jsx
+│   │       ├── 📁 settings/
+│   │       │   └── 📄 page.jsx
+│   │       └── 📄 layout.jsx
+│   │
+│   ├── 📁 restaurants/
+│   │   ├── 📄 page.jsx
+│   │   ├── 📁 [id]/
+│   │   │   └── 📄 page.jsx
+│   │   └── 📁 search/
+│   │       └── 📄 page.jsx
+│   │
+│   ├── 📁 cart/
+│   │   ├── 📄 page.jsx
+│   │   └── 📁 checkout/
+│   │       └── 📁 [id]/
+│   │           └── 📄 page.jsx
+│   │
+│   ├── 📁 orders/
+│   │   ├── 📁 tracking/
+│   │   │   └── 📁 [id]/
+│   │   │       └── 📄 page.jsx
+│   │   └── 📁 history/
+│   │       └── 📄 page.jsx
+│   │
+│   ├── 📁 api/
+│   │   ├── 📁 auth/
+│   │   │   └── 📁 [...nextauth]/
+│   │   │       └── 📄 route.js
+│   │   ├── 📁 admin/
+│   │   │   ├── 📁 restaurants/
+│   │   │   │   └── 📄 route.js
+│   │   │   ├── 📁 orders/
+│   │   │   │   └── 📄 route.js
+│   │   │   └── 📁 users/
+│   │   │       └── 📄 route.js
+│   │   ├── 📁 restaurants/
+│   │   │   ├── 📄 route.js
+│   │   │   └── 📁 [id]/
+│   │   │       ├── 📄 route.js
+│   │   │       └── 📁 menu/
+│   │   │           └── 📄 route.js
+│   │   ├── 📁 menu/
+│   │   │   ├── 📄 route.js
+│   │   │   └── 📁 [id]/
+│   │   │       └── 📄 route.js
+│   │   ├── 📁 orders/
+│   │   │   ├── 📄 route.js
+│   │   │   └── 📁 [id]/
+│   │   │       ├── 📄 route.js
+│   │   │       └── 📁 status/
+│   │   │           └── 📄 route.js
+│   │   ├── 📁 cart/
+│   │   │   └── 📄 route.js
+│   │   ├── 📁 payments/
+│   │   │   ├── 📄 route.js
+│   │   │   ├── 📁 stripe/
+│   │   │   │   └── 📄 route.js
+│   │   │   └── 📁 sslcommerz/
+│   │   │       └── 📄 route.js
+│   │   ├── 📁 upload/
+│   │   │   └── 📄 route.js
+│   │   └── 📁 reviews/
+│   │       └── 📄 route.js
+│   │
+│   ├── 📄 layout.js
+│   ├── 📄 page.js
+│   ├── 📄 loading.jsx
+│   ├── 📄 error.js
+│   ├── 📄 ClientLayout.js
+│   └── 📄 globals.css
+│
+├── 📁 actions/
+│   ├── 📁 auth/
+│   │   ├── 📄 loginUser.js
+│   │   ├── 📄 RegisterUser.js
+│   │   └── 📄 RegisterRestaurant.js
+│   ├── 📁 orders/
+│   │   ├── 📄 createOrder.js
+│   │   ├── 📄 updateStatus.js
+│   │   └── 📄 cancelOrder.js
+│   ├── 📁 cart/
+│   │   ├── 📄 addToCart.js
+│   │   ├── 📄 updateCart.js
+│   │   └── 📄 clearCart.js
+│   └── 📁 payments/
+│       ├── 📄 createPayment.js
+│       └── 📄 verifyPayment.js
+│
+├── 📁 components/
+│   ├── 📁 ui/
+│   │   ├── 📄 Navbar.jsx
+│   │   ├── 📄 Footer.jsx
+│   │   ├── 📄 AdminNav.jsx
+│   │   ├── 📄 RestaurantNav.jsx
+│   │   ├── 📄 UserNav.jsx
+│   │   ├── 📄 ThemeToggle.jsx
+│   │   ├── 📄 SearchBar.jsx
+│   │   └── 📄 LoadingSpinner.jsx
+│   │
+│   ├── 📁 restaurant/
+│   │   ├── 📄 RestaurantCard.jsx
+│   │   ├── 📄 RestaurantList.jsx
+│   │   ├── 📄 RestaurantDetail.jsx
+│   │   └── 📄 SearchFilters.jsx
+│   │
+│   ├── 📁 menu/
+│   │   ├── 📄 FoodCard.jsx
+│   │   ├── 📄 MenuCategory.jsx
+│   │   ├── 📄 MenuList.jsx
+│   │   └── 📄 FoodModal.jsx
+│   │
+│   ├── 📁 cart/
+│   │   ├── 📄 CartItem.jsx
+│   │   ├── 📄 CartSidebar.jsx
+│   │   ├── 📄 CartSummary.jsx
+│   │   └── 📄 CartBadge.jsx
+│   │
+│   ├── 📁 orders/
+│   │   ├── 📄 OrderCard.jsx
+│   │   ├── 📄 OrderList.jsx
+│   │   ├── 📄 OrderDetail.jsx
+│   │   ├── 📄 OrderTracking.jsx
+│   │   └── 📄 StatusBadge.jsx
+│   │
+│   ├── 📁 checkout/
+│   │   ├── 📄 CheckoutForm.jsx
+│   │   ├── 📄 PaymentMethod.jsx
+│   │   ├── 📄 AddressForm.jsx
+│   │   └── 📄 OrderSummary.jsx
+│   │
+│   ├── 📁 forms/
+│   │   ├── 📄 RestaurantForm.jsx
+│   │   ├── 📄 MenuItemForm.jsx
+│   │   ├── 📄 AddressForm.jsx
+│   │   └── 📄 ReviewForm.jsx
+│   │
+│   └── 📄 VideoPlayer.jsx (for restaurant promos)
+│
+├── 📁 hooks/
+│   ├── 📄 use-cart.js
+│   ├── 📄 use-orders.js
+│   ├── 📄 use-restaurants.js
+│   ├── 📄 use-auth.js
+│   └── 📄 use-mobile.js
+│
+├── 📁 lib/
+│   ├── 📄 authOptions.js
+│   ├── 📄 dbconnect.js
+│   ├── 📄 utils.js
+│   ├── 📄 stripe.js
+│   ├── 📄 sslcommerz.js
+│   └── 📄 validations.js
+│
+├── 📁 store/ (Zustand stores)
+│   ├── 📄 cart-store.js
+│   ├── 📄 auth-store.js
+│   ├── 📄 restaurant-store.js
+│   └── 📄 ui-store.js
+│
+├── 📁 providers/
+│   └── 📄 NextAuthProvider.jsx
+│
+├── 📁 assets/
+│   ├── 📁 images/
+│   │   ├── 📁 restaurants/
+│   │   ├── 📁 foods/
+│   │   └── 📁 icons/
+│   └── 📁 promos/
+│
+├── 📁 middleware/
+│   └── 📄 auth.js
+│
+├── 📄 components.json
+├── 📄 next.config.mjs
+├── 📄 postcss.config.mjs
+├── 📄 eslint.config.mjs
+├── 📄 jsconfig.json
+├── 📄 package.json
+├── 📄 package-lock.json
+├── 📄 README.md
+└── 📄 .env.local
+
+
+
+
+
+
+
+
+
+
+# Install authentication and database packages
+npm install next-auth bcrypt mongodb
+npm install -D @types/bcrypt
+
+# Install shadcn/ui components
+npx shadcn@latest add button
+npx shadcn@latest add card
+npx shadcn@latest add input
+npx shadcn@latest add label
+npx shadcn@latest add separator
+npx shadcn@latest add spinner
+npx shadcn@latest add dropdown-menu
+
+# Install additional useful packages
+npm install lucide-react sweetalert2
+npm install -D @types/sweetalert2
