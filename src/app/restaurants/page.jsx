@@ -43,7 +43,7 @@ export default function RestaurantsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen  bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
@@ -63,7 +63,7 @@ export default function RestaurantsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen pt-[74px] bg-gray-50 py-8">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Discover Restaurants</h1>
         <p className="text-gray-600 mb-8">Find your favorite food delivered fast</p>

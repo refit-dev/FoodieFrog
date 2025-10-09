@@ -55,7 +55,7 @@ export default function RestaurantPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen  bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <div className="animate-pulse">
             <div className="h-64 bg-gray-200 rounded-lg mb-6"></div>
@@ -89,7 +89,7 @@ export default function RestaurantPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen pt-[64] bg-gray-50">
       {/* Restaurant Header */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-8">
