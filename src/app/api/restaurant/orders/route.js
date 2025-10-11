@@ -6,10 +6,12 @@ import { ObjectId } from 'mongodb';
 
 // GET - Fetch all orders for the restaurant
 // Update the GET function to handle count parameter
+// GET - Fetch all orders for the restaurant
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const countOnly = searchParams.get('countOnly') === 'true';
+    const limit = parseInt(searchParams.get('limit')) || 0;
 
     const session = await getServerSession(authOptions);
     
@@ -46,11 +48,16 @@ export async function GET(request) {
       });
     }
 
-    // Get orders for this restaurant
-    const orders = await ordersCollection
+    // Build query with optional limit
+    let query = ordersCollection
       .find({ restaurantId: restaurant._id })
-      .sort({ createdAt: -1 })
-      .toArray();
+      .sort({ createdAt: -1 });
+
+    if (limit > 0) {
+      query = query.limit(limit);
+    }
+
+    const orders = await query.toArray();
 
     // Serialize orders for client
     const serializedOrders = orders.map(order => ({
