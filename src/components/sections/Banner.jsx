@@ -13,7 +13,7 @@ const Banner = () => {
       </h1>
 
       {/* Left text section */}
-      <div className="flex flex-col-reverse gap-5 justify-between items-center md:flex-row">
+      <div className="flex flex-col-reverse container mx-auto gap-5 md:justify-between items-center md:flex-row">
         <div className="relative z-10 text-white max-w-xl">
           <h2
             className={`${lobster.className} text-5xl lg:text-7xl font-bold leading-tight mb-6`}
