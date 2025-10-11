@@ -28,10 +28,6 @@ export default function ContactUs() {
         {/* text */}
         <div className="text-4xl text-white md:text-6xl font-bold text-center z-10">
           Contact <br /> FoodieFrog
-<<<<<<< HEAD
-          
-=======
->>>>>>> 469d733ec20fb9277eace98e36064712eb841c3d
         </div>
       </div>
 
