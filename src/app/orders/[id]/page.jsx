@@ -102,7 +102,7 @@ export default function OrderTrackingPage() {
   const statusSteps = getStatusSteps();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen pt-[74px] bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Order Header */}
         <div className="mb-8">
