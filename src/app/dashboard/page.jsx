@@ -132,7 +132,7 @@ export default function CustomerDashboard() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-black py-8">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
@@ -154,14 +154,14 @@ export default function CustomerDashboard() {
   }
 
   return (
-    <div className="min-h-screen pt-[64px] bg-gray-50 py-8">
+    <div className="min-h-screen pt-[74px] bg-gray-50 dark:bg-black py-8">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Welcome back, {session?.user?.name || 'Customer'}! 👋
           </h1>
-          <p className="text-gray-600 mt-2">Here's your food delivery dashboard</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Here's your food delivery dashboard</p>
         </div>
 
         {/* Error Message */}
@@ -183,14 +183,14 @@ export default function CustomerDashboard() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Total Orders */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white dark:bg-[#171717] dark:border-gray-500 rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center">
               <div className="p-3 bg-blue-50 rounded-lg">
                 <ShoppingBag className="h-6 w-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Orders</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm font-medium dark:text-gray-400 text-gray-600">Total Orders</p>
+                <p className="text-2xl font-bold dark:text-gray-200 text-gray-900">
                   {userStats?.totalOrders || 0}
                 </p>
               </div>
@@ -198,14 +198,14 @@ export default function CustomerDashboard() {
           </div>
 
           {/* Pending Orders */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border dark:border-gray-500 border-gray-200 p-6">
             <div className="flex items-center">
               <div className="p-3 bg-orange-50 rounded-lg">
                 <Clock className="h-6 w-6 text-orange-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Active Orders</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm font-medium dark:text-gray-400 text-gray-600">Active Orders</p>
+                <p className="text-2xl font-bold dark:text-gray-200 text-gray-900">
                   {userStats?.activeOrders || 0}
                 </p>
               </div>
@@ -213,14 +213,14 @@ export default function CustomerDashboard() {
           </div>
 
           {/* Total Spent */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 dark:bg-[#171717] dark:border-gray-500 p-6">
             <div className="flex items-center">
               <div className="p-3 bg-green-50 rounded-lg">
                 <Star className="h-6 w-6 text-green-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Spent</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm font-medium dark:text-gray-400 text-gray-600">Total Spent</p>
+                <p className="text-2xl font-bold dark:text-gray-200 text-gray-900">
                   ${userStats?.totalSpent?.toFixed(2) || '0.00'}
                 </p>
               </div>
@@ -232,9 +232,9 @@ export default function CustomerDashboard() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Recent Orders */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border dark:border-gray-500 border-gray-200 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Recent Orders</h2>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-200">Recent Orders</h2>
                 <Link
                   href="/orders"
                   className="text-green-600 hover:text-green-700 font-medium"
@@ -246,8 +246,8 @@ export default function CustomerDashboard() {
               {recentOrders.length === 0 ? (
                 <div className="text-center py-8">
                   <ShoppingBag className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No orders yet</h3>
-                  <p className="text-gray-600 mb-4">Start by placing your first order!</p>
+                  <h3 className="text-lg font-medium dark:text-gray-200 text-gray-900 mb-2">No orders yet</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">Start by placing your first order!</p>
                   <Link
                     href="/restaurants"
                     className="inline-flex items-center bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
@@ -293,48 +293,48 @@ export default function CustomerDashboard() {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
+            <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border border-gray-200 dark:border-gray-500 p-6">
+              <h2 className="text-xl font-semibold dark:text-gray-200 text-gray-900 mb-6">Quick Actions</h2>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <Link
                   href="/restaurants"
-                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-green-300 hover:bg-green-50 transition-colors text-center"
+                  className="flex flex-col items-center p-4 border border-gray-200 dark:border-gray-500 rounded-lg hover:border-green-300 hover:bg-green-50 dark:hover:bg-gray-800 transition-colors text-center"
                 >
                   <div className="p-3 bg-green-100 rounded-lg mb-3">
                     <ShoppingBag className="h-6 w-6 text-green-600" />
                   </div>
-                  <span className="font-medium text-gray-900">Order Food</span>
+                  <span className="font-medium dark:text-gray-200 text-gray-900">Order Food</span>
                 </Link>
 
                 <Link
                   href="/orders"
-                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors text-center"
+                  className="flex flex-col items-center p-4 border border-gray-200 dark:border-gray-500 dark:hover:bg-gray-800 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors text-center"
                 >
                   <div className="p-3 bg-blue-100 rounded-lg mb-3">
                     <Calendar className="h-6 w-6 text-blue-600" />
                   </div>
-                  <span className="font-medium text-gray-900">My Orders</span>
+                  <span className="font-medium dark:text-gray-200 text-gray-900">My Orders</span>
                 </Link>
 
                 <Link
                   href="/profile"
-                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-colors text-center"
+                  className="flex flex-col items-center p-4 border border-gray-200 dark:border-gray-500 dark:hover:bg-gray-800 rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-colors text-center"
                 >
                   <div className="p-3 bg-purple-100 rounded-lg mb-3">
                     <Settings className="h-6 w-6 text-purple-600" />
                   </div>
-                  <span className="font-medium text-gray-900">Profile</span>
+                  <span className="font-medium dark:text-gray-200 text-gray-900">Profile</span>
                 </Link>
 
                 <button
                   onClick={() => router.push('/restaurants?favorites=true')}
-                  className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-red-300 hover:bg-red-50 transition-colors text-center"
+                  className="flex flex-col items-center p-4 border border-gray-200 dark:border-gray-500 dark:hover:bg-gray-800 rounded-lg hover:border-red-300 hover:bg-red-50 transition-colors text-center"
                 >
                   <div className="p-3 bg-red-100 rounded-lg mb-3">
                     <Heart className="h-6 w-6 text-red-600" />
                   </div>
-                  <span className="font-medium text-gray-900">Favorites</span>
+                  <span className="font-medium dark:text-gray-200 text-gray-900">Favorites</span>
                 </button>
               </div>
             </div>
@@ -343,8 +343,8 @@ export default function CustomerDashboard() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Profile Summary */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Profile</h2>
+            <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border dark:border-gray-500 border-gray-200 p-6">
+              <h2 className="text-xl font-semibold dark:text-gray-200 text-gray-900 mb-4">Your Profile</h2>
               
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
@@ -354,14 +354,14 @@ export default function CustomerDashboard() {
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">{session?.user?.name}</h3>
-                    <p className="text-sm text-gray-600">{session?.user?.email}</p>
+                    <h3 className="font-medium dark:text-gray-200 text-gray-900">{session?.user?.name}</h3>
+                    <p className="text-sm dark:text-gray-400 text-gray-600">{session?.user?.email}</p>
                   </div>
                 </div>
 
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Member since</span>
+                    <span className="text-gray-600 dark:text-gray-400">Member since</span>
                     <span className="font-medium">
                       {userStats?.memberSince ? 
                         new Date(userStats.memberSince).toLocaleDateString('en-US', {
@@ -372,7 +372,7 @@ export default function CustomerDashboard() {
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Account type</span>
+                    <span className="text-gray-600 dark:text-gray-400">Account type</span>
                     <span className="font-medium capitalize">{session?.user?.role}</span>
                   </div>
                 </div>
@@ -387,14 +387,14 @@ export default function CustomerDashboard() {
             </div>
 
             {/* Delivery Address */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Delivery Address</h2>
+            <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border dark:border-gray-500 border-gray-200 p-6">
+              <h2 className="text-xl font-semibold dark:text-gray-200 text-gray-900 mb-4">Delivery Address</h2>
               
               <div className="space-y-3">
                 <div className="flex items-start space-x-3">
                   <MapPin className="h-5 w-5 text-gray-400 mt-0.5" />
                   <div>
-                    <p className="text-gray-700">
+                    <p className="text-gray-700 dark:text-gray-400">
                       {formatAddress(userStats?.defaultAddress)}
                     </p>
                   </div>
@@ -410,7 +410,7 @@ export default function CustomerDashboard() {
             </div>
 
             {/* Support */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <div className="bg-blue-50 dark:bg-[#171717] border border-blue-200 dark:border-gray-500 rounded-lg p-6">
               <h3 className="font-semibold text-blue-900 mb-2">Need Help?</h3>
               <p className="text-blue-700 text-sm mb-4">
                 Having issues with your orders or account?

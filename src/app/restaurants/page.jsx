@@ -63,13 +63,13 @@ export default function RestaurantsPage() {
   }
 
   return (
-    <div className="min-h-screen pt-[74px] bg-gray-50 py-8">
+    <div className="min-h-screen pt-[74px] bg-gray-50 dark:bg-black py-8">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Discover Restaurants</h1>
-        <p className="text-gray-600 mb-8">Find your favorite food delivered fast</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-200 dark:text-white mb-2">Discover Restaurants</h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-8">Find your favorite food delivered fast</p>
 
         {/* Search and Filter */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Search Input */}
             <div className="relative">
@@ -101,7 +101,7 @@ export default function RestaurantsPage() {
         {filteredRestaurants.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-gray-400 text-6xl mb-4">🍽️</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No restaurants found</h3>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-200 mb-2">No restaurants found</h3>
             <p className="text-gray-600">Try adjusting your search or filter criteria</p>
           </div>
         ) : (
@@ -110,9 +110,9 @@ export default function RestaurantsPage() {
               <Link
                 key={restaurant._id}
                 href={`/restaurants/${restaurant._id}`}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
+                className="bg-white dark:bg-[#171717] rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
               >
-                <div className="aspect-w-16 aspect-h-9 bg-gray-200">
+                <div className="aspect-w-16 aspect-h-9 bg-gray-200 dark:bg-[#171717]">
                   <img
                     src={restaurant.image || '/restaurant-placeholder.jpg'}
                     alt={restaurant.name}
@@ -120,9 +120,9 @@ export default function RestaurantsPage() {
                   />
                 </div>
 
-                <div className="p-4">
+                <div className="p-4 dark:bg-[#171717]">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-lg text-gray-900 truncate">
+                    <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-200 truncate">
                       {restaurant.name}
                     </h3>
                     <div className="flex items-center text-sm text-gray-600">
