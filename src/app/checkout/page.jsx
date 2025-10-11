@@ -8,13 +8,14 @@ import Swal from 'sweetalert2';
 
 export default function CheckoutPage() {
   const { items, restaurant, getCartTotal, clearCart } = useCart();
+
   const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     deliveryAddress: '',
     phoneNumber: '',
-    specialInstructions: ''
+    specialInstructions: '',
   });
 
   useEffect(() => {
@@ -32,11 +33,12 @@ export default function CheckoutPage() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handlePlaceOrder = async () => {
+    // check for required fields
     if (!formData.deliveryAddress.trim() || !formData.phoneNumber.trim()) {
       await Swal.fire({
         title: 'Missing Information',
@@ -48,8 +50,10 @@ export default function CheckoutPage() {
       return;
     }
 
+    // if all good, proceed
     setLoading(true);
 
+    //  create order data
     try {
       const subtotal = Number(getCartTotal()) || 0;
       const deliveryFee = Number(restaurant?.deliveryFee) || 0;
@@ -65,39 +69,82 @@ export default function CheckoutPage() {
         subtotal: parseFloat(subtotal),
         deliveryFee: parseFloat(deliveryFee),
         tax: parseFloat(tax),
-        total: parseFloat(total)
+        total: parseFloat(total),
+      };
+      console.log(orderData);
+
+      // metadata for stripe
+      const metadata = {
+        restaurantId: restaurant._id,
+        deliveryAddress: formData.deliveryAddress,
+        phoneNumber: formData.phoneNumber,
+        specialInstructions: formData.specialInstructions,
+        subtotal: subtotal.toString(),
+        deliveryFee: deliveryFee.toString(),
+        tax: tax.toString(),
+        total: total.toString(),
+        items: JSON.stringify(
+          items.map((item) => ({
+            id: item._id,
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+            image: item.image,
+          }))
+        ),
       };
 
-      const response = await fetch('/api/orders', {
+      // create checkout session with stripe
+      const SessionResponse = await fetch('/api/checkout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items,
+          restaurant,
+          deliveryFee,
+          tax,
+          metadata,
+        }),
       });
 
-      const result = await response.json();
+      const { url } = await SessionResponse.json();
 
-      if (result.success) {
-        await Swal.fire({
-          title: 'Order Placed! 🎉',
-          html: `
-            <div class="text-center">
-              <p class="text-lg mb-2">Your order has been placed successfully!</p>
-              <p class="text-sm text-gray-600 mb-4">Order #: <strong>${result.data.orderNumber}</strong></p>
-              <p class="text-sm">You can track your order in the "My Orders" section.</p>
-            </div>
-          `,
-          icon: 'success',
-          confirmButtonText: 'View My Orders',
-          confirmButtonColor: '#22c55e',
-        });
+      // Redirect user to Stripe Checkout
+      window.location.href = url;
 
-        clearCart();
-        router.push('/orders');
-      } else {
-        throw new Error(result.message);
-      }
+      // send order data to API
+      // const response = await fetch('/api/orders', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   credentials: 'include',
+      //   body: JSON.stringify(orderData),
+      // });
+
+      // const result = await response.json();
+
+      // if all good, show success message
+      // if (result.success) {
+      //   await Swal.fire({
+      //     title: 'Order Placed! 🎉',
+      //     html: `
+      //       <div class="text-center">
+      //         <p class="text-lg mb-2">Your order has been placed successfully!</p>
+      //         <p class="text-sm text-gray-600 mb-4">Order #: <strong>${result.data.orderNumber}</strong></p>
+      //         <p class="text-sm">You can track your order in the "My Orders" section.</p>
+      //       </div>
+      //     `,
+      //     icon: 'success',
+      //     confirmButtonText: 'View My Orders',
+      //     confirmButtonColor: '#22c55e',
+      //   });
+
+      //   clearCart();
+      //   router.push('/orders');
+      // } else {
+      //   throw new Error(result.message);
+      // }
     } catch (error) {
       console.error('Error placing order:', error);
       await Swal.fire({
@@ -124,10 +171,10 @@ export default function CheckoutPage() {
     return null;
   }
 
-const subtotal = Number(getCartTotal()) || 0;
-const deliveryFee = Number(restaurant?.deliveryFee) || 0;
-const tax = +(subtotal * 0.08).toFixed(2);
-const total = +(subtotal + deliveryFee + tax).toFixed(2);
+  const subtotal = Number(getCartTotal()) || 0;
+  const deliveryFee = Number(restaurant?.deliveryFee) || 0;
+  const tax = +(subtotal * 0.08).toFixed(2);
+  const total = +(subtotal + deliveryFee + tax).toFixed(2);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -137,7 +184,9 @@ const total = +(subtotal + deliveryFee + tax).toFixed(2);
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Order Summary */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Order Summary
+            </h2>
 
             {/* Restaurant Info */}
             <div className="mb-4 p-3 bg-gray-50 rounded-lg">
@@ -146,8 +195,11 @@ const total = +(subtotal + deliveryFee + tax).toFixed(2);
             </div>
 
             <div className="space-y-4">
-              {items.map(item => (
-                <div key={item._id} className="flex justify-between items-center">
+              {items.map((item) => (
+                <div
+                  key={item._id}
+                  className="flex justify-between items-center"
+                >
                   <div className="flex items-center space-x-3">
                     <img
                       src={item.image || '/food-placeholder.jpg'}
@@ -156,10 +208,14 @@ const total = +(subtotal + deliveryFee + tax).toFixed(2);
                     />
                     <div>
                       <h3 className="font-medium text-gray-900">{item.name}</h3>
-                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                      <p className="text-sm text-gray-600">
+                        Qty: {item.quantity}
+                      </p>
                     </div>
                   </div>
-                  <span className="font-medium">${(item.price * item.quantity)}</span>
+                  <span className="font-medium">
+                    ${item.price * item.quantity}
+                  </span>
                 </div>
               ))}
             </div>
@@ -187,7 +243,9 @@ const total = +(subtotal + deliveryFee + tax).toFixed(2);
           {/* Checkout Form */}
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Delivery Information</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Delivery Information
+              </h2>
 
               <div className="space-y-4">
                 <div>
