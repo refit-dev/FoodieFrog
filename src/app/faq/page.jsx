@@ -104,7 +104,7 @@ export default function FAQsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen bg-gray-50 dark:bg-black pt-[64px]">
       {/* Banner Section */}
       <div className="relative h-64 bg-cover bg-center flex items-center justify-center bg-[url('/about.jpg')]">
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -142,7 +142,7 @@ export default function FAQsPage() {
                           onClick={() => setActiveCategory(category)}
                           className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 ${
                             activeCategory === category
-                              ? 'bg-primary text-white'
+                              ? 'bg-primary dark:bg-gray-800 text-white'
                               : 'hover:bg-gray-100 dark:hover:bg-gray-800'
                           }`}>
                           {category}
