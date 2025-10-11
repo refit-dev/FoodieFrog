@@ -27,18 +27,18 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
-useEffect(() => {
-  if (pathname === "/") {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  } else {
-    // Reset scroll state for non-home pages
-    setIsScrolled(true);
-  }
-}, [pathname]);
+  useEffect(() => {
+    if (pathname === "/") {
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 10);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    } else {
+      // Reset scroll state for non-home pages
+      setIsScrolled(true);
+    }
+  }, [pathname]);
 
 
 
@@ -96,6 +96,9 @@ useEffect(() => {
       <Button variant="ghost" asChild className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500">
         <Link href="/restaurants">Restaurants</Link>
       </Button>
+      <Button variant="ghost" asChild className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500">
+        <Link href="/faq">Faq</Link>
+      </Button>
       {session && (
         <>
           <Button variant="ghost" asChild className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500">
@@ -112,10 +115,9 @@ useEffect(() => {
   )
 
   return (
-    <nav className={`fixed w-full top-0 z-50 transition-colors duration-300  ${
-    isScrolled ? "bg-white dark:bg-black dark:text-white text-black shadow-md" : "bg-transparent text-white"
-  }`}
->
+    <nav className={`fixed w-full top-0 z-50 transition-colors duration-300  ${isScrolled ? "bg-white dark:bg-black dark:text-white text-black shadow-md" : "bg-transparent text-white"
+      }`}
+    >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link href="/" className="lg:text-2xl text-md font-bold text-primary flex items-center gap-2">
           🐸 FoodieFrog
