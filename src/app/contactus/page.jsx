@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 'use client';
 
->>>>>>> development
 import MapComponent from '@/components/Map/MapComponent';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,13 +11,6 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
-<<<<<<< HEAD
-import React from 'react';
-import Link from 'next/link';
-import { Facebook, Youtube, Twitter, Send } from 'lucide-react';
-
-export default function ContactUs() {
-=======
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Facebook, Youtube, Twitter, Send, CheckCircle } from 'lucide-react';
@@ -59,17 +49,12 @@ export default function ContactUs() {
       }, 5000);
     }, 1000);
   };
->>>>>>> development
   const center = {
     lat: 23.8103, // Dhaka
     lng: 90.4125,
   };
   return (
-<<<<<<< HEAD
-    <div>
-=======
     <div className="pt-[64px]">
->>>>>>> development
       {/* top section with bg */}
       <div className="relative min-h-[70vh] max-h-[75vh] bg-[url(/contact.jpg)] bg-cover bg-center flex justify-center items-center">
         {/* Dark gradient overlay */}
@@ -91,27 +76,6 @@ export default function ContactUs() {
               <CardDescription>Contact From Anywhere</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-<<<<<<< HEAD
-              {/* name */}
-              <div className="space-y-2">
-                <Label htmlFor="text">Name</Label>
-                <Input id="name" type="text" placeholder="Enter your Name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter your email" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message">Your Message</Label>
-                <textarea
-                  id="message"
-                  placeholder="Enter Your Message Here"
-                  className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-vertical"
-                  rows={2}
-                />
-              </div>
-              <Button className="w-full cursor-pointer">Send Message</Button>
-=======
               {/* Success Message */}
               {isSubmitted && (
                 <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-md text-green-800">
@@ -166,7 +130,6 @@ export default function ContactUs() {
                   {isLoading ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
->>>>>>> development
             </CardContent>
           </Card>
         </div>

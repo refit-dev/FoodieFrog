@@ -381,7 +381,7 @@ export default function Login() {
                     <div className="relative my-6">
                         <Separator />
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="bg-white px-2 text-sm text-gray-500">or continue with</span>
+                            {/* <span className="bg-white px-2 text-sm text-gray-500">or continue with</span> */}
                         </div>
                     </div>
 

@@ -17,13 +17,13 @@ import { ThemeToggle } from './theme-toggle';
 import CartIcon from '../cart/CartIcon';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 export function Navbar() {
   const { data: session, status } = useSession();
   const [isRestaurant, setIsRestaurant] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -71,6 +71,25 @@ export function Navbar() {
     checkRestaurantStatus();
   }, [session]);
 
+  // Function to check if a route is active
+  const isActiveRoute = (route) => {
+    if (route === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(route);
+  };
+
+  // Function to get active link styles
+  const getActiveStyles = (route) => {
+    const isActive = isActiveRoute(route);
+    const baseStyles = "bg-transparent hover:bg-transparent";
+    const activeStyles = isActive
+      ? "text-yellow-400 dark:text-green-400 font-bold"
+      : "hover:text-green-500 dark:hover:text-green-500 text-black , dark:text-white";
+       
+    return cn(baseStyles, activeStyles);
+  };
+
   if (!isMounted) {
     return (
       <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
@@ -86,41 +105,41 @@ export function Navbar() {
     );
   }
 
-  // Menu items JSX
+  // Menu items JSX with active state
   const MenuItems = () => (
     <>
       <Button
         variant="ghost"
         asChild
-        className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+        className={getActiveStyles('/')}
       >
         <Link href="/">Home</Link>
       </Button>
       <Button
         variant="ghost"
         asChild
-        className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+        className={getActiveStyles('/restaurants')}
       >
         <Link href="/restaurants">Restaurants</Link>
       </Button>
       <Button
         variant="ghost"
         asChild
-        className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+        className={getActiveStyles('/faq')}
       >
         <Link href="/faq">Faq</Link>
       </Button>
       <Button
         variant="ghost"
         asChild
-        className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+        className={getActiveStyles('/about')}
       >
         <Link href="/about">About Us</Link>
       </Button>
       <Button
         variant="ghost"
         asChild
-        className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+        className={getActiveStyles('/contactus')}
       >
         <Link href="/contactus">Contact Us</Link>
       </Button>
@@ -129,7 +148,7 @@ export function Navbar() {
           <Button
             variant="ghost"
             asChild
-            className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+            className={getActiveStyles('/orders')}
           >
             <Link href="/orders">My Orders</Link>
           </Button>
@@ -137,7 +156,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               asChild
-              className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+              className={getActiveStyles('/dashboard')}
             >
               <Link href="/dashboard">Dashboard</Link>
             </Button>
@@ -147,13 +166,23 @@ export function Navbar() {
     </>
   );
 
+  // Function for mobile active styles
+  const getMobileActiveStyles = (route) => {
+    const isActive = isActiveRoute(route);
+    return cn(
+      "block px-2 py-1 rounded transition-colors",
+      isActive
+        ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 font-semibold"
+        : "hover:bg-gray-100 dark:hover:bg-gray-800"
+    );
+  };
+
   return (
     <nav
-      className={`fixed w-full top-0 z-50 transition-colors duration-300  ${
-        isScrolled
+      className={`fixed w-full top-0 z-50 transition-colors duration-300  ${isScrolled
           ? 'bg-white dark:bg-black dark:text-white text-black shadow-md'
           : 'bg-transparent text-white'
-      }`}
+        }`}
     >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link
@@ -206,39 +235,32 @@ export function Navbar() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild className={isActiveRoute('/profile') ? 'bg-muted' : ''}>
                   <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild className={isActiveRoute('/orders') ? 'bg-muted' : ''}>
                   <Link href="/orders">My Orders</Link>
                 </DropdownMenuItem>
 
                 {session.user?.role === 'admin' && (
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild className={isActiveRoute('/admin/dashboard') ? 'bg-muted' : ''}>
                     <Link href="/admin/dashboard">Admin Dashboard</Link>
                   </DropdownMenuItem>
                 )}
-                {/* {session.user?.role === 'restaurant' && (
-                  <DropdownMenuItem asChild>
-                    <Link href="/restaurant/dashboard">
-                      Restaurant Dashboardd
-                    </Link>
-                  </DropdownMenuItem>
-                )} */}
                 {session.user?.role === 'customer' && (
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild className={isActiveRoute('/dashboard') ? 'bg-muted' : ''}>
                     <Link href="/dashboard">Customer Dashboard</Link>
                   </DropdownMenuItem>
                 )}
                 {session.user?.role === 'customer' && !isRestaurant && (
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild className={isActiveRoute('/auth/restaurant-register') ? 'bg-muted' : ''}>
                     <Link href="/auth/restaurant-register">
                       Become a Restaurant
                     </Link>
                   </DropdownMenuItem>
                 )}
                 {isRestaurant && (
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild className={isActiveRoute('/restaurant/dashboard') ? 'bg-muted' : ''}>
                     <Link href="/restaurant/dashboard">
                       Restaurant Dashboard
                     </Link>
@@ -258,11 +280,11 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 asChild
-                className="bg-transparent hover:bg-transparent hover:text-black dark:hover:text-green-500"
+                className={getActiveStyles('/auth/login')}
               >
                 <Link href="/auth/login">Sign In</Link>
               </Button>
-              <Button asChild>
+              <Button asChild className={getActiveStyles('/auth/register')}>
                 <Link href="/auth/register">Sign Up</Link>
               </Button>
             </div>
@@ -282,13 +304,36 @@ export function Navbar() {
       {/* Mobile Menu Drawer */}
       {mobileOpen && (
         <div className="md:hidden bg-white text-black dark:bg-black dark:text-white w-full absolute top-full left-0 z-40 flex flex-col items-center p-4 gap-2 border-t border-muted">
-          <MenuItems />
+          <Link href="/" className={getMobileActiveStyles('/')} onClick={() => setMobileOpen(false)}>
+            Home
+          </Link>
+          <Link href="/restaurants" className={getMobileActiveStyles('/restaurants')} onClick={() => setMobileOpen(false)}>
+            Restaurants
+          </Link>
+          <Link href="/faq" className={getMobileActiveStyles('/faq')} onClick={() => setMobileOpen(false)}>
+            Faq
+          </Link>
+          <Link href="/about" className={getMobileActiveStyles('/about')} onClick={() => setMobileOpen(false)}>
+            About Us
+          </Link>
+          <Link href="/contactus" className={getMobileActiveStyles('/contactus')} onClick={() => setMobileOpen(false)}>
+            Contact Us
+          </Link>
+
           {session && (
             <>
+              <Link href="/orders" className={getMobileActiveStyles('/orders')} onClick={() => setMobileOpen(false)}>
+                My Orders
+              </Link>
+              <Link href="/profile" className={getMobileActiveStyles('/profile')} onClick={() => setMobileOpen(false)}>
+                Profile
+              </Link>
+
               {session.user?.role === 'admin' && (
                 <Link
                   href="/admin/dashboard"
-                  className="block px-2 py-1 hover:bg-muted rounded"
+                  className={getMobileActiveStyles('/admin/dashboard')}
+                  onClick={() => setMobileOpen(false)}
                 >
                   Admin Dashboard
                 </Link>
@@ -296,7 +341,8 @@ export function Navbar() {
               {session.user?.role === 'restaurant' && (
                 <Link
                   href="/restaurant/dashboard"
-                  className="block px-2 py-1 hover:bg-muted rounded"
+                  className={getMobileActiveStyles('/restaurant/dashboard')}
+                  onClick={() => setMobileOpen(false)}
                 >
                   Restaurant Dashboard
                 </Link>
@@ -305,14 +351,16 @@ export function Navbar() {
                 <>
                   <Link
                     href="/dashboard"
-                    className="block px-2 py-1 hover:bg-muted rounded"
+                    className={getMobileActiveStyles('/dashboard')}
+                    onClick={() => setMobileOpen(false)}
                   >
                     Customer Dashboard
                   </Link>
                   {!isRestaurant && (
                     <Link
                       href="/auth/restaurant-register"
-                      className="block px-2 py-1 hover:bg-muted rounded"
+                      className={getMobileActiveStyles('/auth/restaurant-register')}
+                      onClick={() => setMobileOpen(false)}
                     >
                       Become a Restaurant
                     </Link>
@@ -320,24 +368,29 @@ export function Navbar() {
                 </>
               )}
               <button
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className="text-red-600 px-2 py-1 hover:bg-red-100 rounded text-left"
+                onClick={() => {
+                  signOut({ callbackUrl: '/' });
+                  setMobileOpen(false);
+                }}
+                className="text-red-600 px-2 py-1 hover:bg-red-100 dark:hover:bg-red-900 rounded text-left w-full text-center"
               >
                 Sign Out
               </button>
             </>
           )}
           {!session && (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 w-full">
               <Link
                 href="/auth/login"
-                className="block px-2 py-1 hover:bg-muted rounded"
+                className={getMobileActiveStyles('/auth/login')}
+                onClick={() => setMobileOpen(false)}
               >
                 Sign In
               </Link>
               <Link
                 href="/auth/register"
-                className="block px-2 py-1 hover:bg-muted rounded"
+                className={getMobileActiveStyles('/auth/register')}
+                onClick={() => setMobileOpen(false)}
               >
                 Sign Up
               </Link>

@@ -1,7 +1,5 @@
 # DAY - 2
-FoodieFrog - Food Delivery Platform ZiGNsj8EXxz8xOhj  FoodieFrog_DB
-42533334121-cc7nem9bgig28os3coevh5issbd4s9s1.apps.googleusercontent.com id
-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 secret
+FoodieFrog - Food Delivery Platform 
 
 🐸 Project Overview
 FoodieFrog is a modern food delivery platform built with Next.js, featuring restaurant listings, cart functionality, order tracking, payment integration, and admin dashboard capabilities.

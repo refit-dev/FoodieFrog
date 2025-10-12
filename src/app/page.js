@@ -16,6 +16,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import React from "react";
+import FoodCategoryExplorer from "@/components/Map/MapComponent";
+import FoodieCommunityFeed from "@/components/sections/FoodieCommunityFeed";
+import LottieSimple from "@/components/LottieSimple";
 
 const center = {
   lat: 23.8103, // Dhaka
@@ -32,9 +35,9 @@ export default function Home() {
       <TestimonialsSection />
       <BrandPartners />
       {/* form map container */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-10 sm:my-20 max-w-7xl w-95/100 mx-auto">
+      <div className=" flex justify-center items-center w-full flex-col lg:flex-row p-3">
         {/* form */}
-        <div>
+        <div className="lg:w-6/12  w-full">
           <Card>
             <CardHeader>
               <CardTitle>Contact Form</CardTitle>
@@ -65,10 +68,13 @@ export default function Home() {
         </div>
 
         {/* map */}
-        <div className="rounded-3xl max-h-fit overflow-hidden">
-          <MapComponent markerPosition={center} />
-        </div>
+        
+           <LottieSimple />
+      
       </div>
+ 
     </div>
+
+
   );
 }
