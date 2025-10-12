@@ -126,11 +126,11 @@ export default function RestaurantDashboard() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+      <div className="my-8">
+        <h1 className="text-3xl font-bold text-gray-900 text-center">
           Welcome back{restaurant ? `, ${restaurant.name}` : ''}! 👋
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-600 mt-2 text-center">
           Manage your restaurant and track your performance
         </p>
       </div>

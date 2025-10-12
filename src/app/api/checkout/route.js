@@ -16,12 +16,12 @@ export async function POST(request) {
         name: item.name,
         images: [item.image || ''],
       },
-      unit_amount: Math.round(item.price * 100), // Stripe expects cents
+      unit_amount: Math.round(item.price * 100),
     },
     quantity: item.quantity,
   }));
 
-  // Add delivery fee and tax as separate line items if needed
+  // Add delivery fee and tax as separate line items
   if (deliveryFee > 0) {
     line_items.push({
       price_data: {
