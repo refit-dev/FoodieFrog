@@ -328,11 +328,11 @@ const handlePaymentSuccess = async (paymentIntentId) => {
     }
 
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen pt-[74px] bg-gray-50 dark:bg-black py-8">
         <div className="container mx-auto px-4 max-w-2xl">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Complete Payment</h1>
+          <h1 className="text-3xl font-bold dark:text-gray-200 text-gray-900 mb-8">Complete Payment</h1>
           
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border dark:border-gray-500 border-gray-200 p-6">
             <Elements
               stripe={stripePromise}
               options={{
@@ -356,9 +356,9 @@ const handlePaymentSuccess = async (paymentIntentId) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen pt-[74px] dark:bg-black bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+        <h1 className="text-3xl font-bold dark:text-gray-200 text-gray-900 mb-8">Checkout</h1>
 
         {stripeError && (
           <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-6">
@@ -368,15 +368,15 @@ const handlePaymentSuccess = async (paymentIntentId) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Order Summary - Same as before */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="bg-white dark:bg-black dark:border-gray-500 rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold dark:text-gray-200 text-gray-900 mb-4">
               Order Summary
             </h2>
 
             {/* Restaurant Info */}
-            <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-              <h3 className="font-medium text-gray-900">{restaurant.name}</h3>
-              <p className="text-sm text-gray-600">{restaurant.cuisineType}</p>
+            <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <h3 className="font-medium text-gray-900 dark:text-gray-200">{restaurant.name}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{restaurant.cuisineType}</p>
             </div>
 
             <div className="space-y-4">
@@ -392,8 +392,8 @@ const handlePaymentSuccess = async (paymentIntentId) => {
                       className="h-12 w-12 object-cover rounded"
                     />
                     <div>
-                      <h3 className="font-medium text-gray-900">{item.name}</h3>
-                      <p className="text-sm text-gray-600">
+                      <h3 className="font-medium dark:text-gray-200 text-gray-900">{item.name}</h3>
+                      <p className="text-sm dark:text-gray-400 text-gray-600">
                         Qty: {item.quantity}
                       </p>
                     </div>
@@ -405,7 +405,7 @@ const handlePaymentSuccess = async (paymentIntentId) => {
               ))}
             </div>
 
-            <div className="border-t border-gray-200 mt-4 pt-4 space-y-2">
+            <div className="border-t dark:border-gray-500 border-gray-200 mt-4 pt-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Subtotal</span>
                 <span>${subtotal.toFixed(2)}</span>
@@ -427,14 +427,14 @@ const handlePaymentSuccess = async (paymentIntentId) => {
 
           {/* Checkout Form - Same as before */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            <div className="bg-white  dark:bg-[#171717] rounded-lg shadow-sm border dark:border-gray-500 border-gray-200 p-6">
+              <h2 className="text-xl font-semibold dark:text-gray-200 text-gray-900 mb-4">
                 Delivery Information
               </h2>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                     Delivery Address *
                   </label>
                   <textarea
@@ -449,7 +449,7 @@ const handlePaymentSuccess = async (paymentIntentId) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -464,7 +464,7 @@ const handlePaymentSuccess = async (paymentIntentId) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                     Special Instructions
                   </label>
                   <textarea

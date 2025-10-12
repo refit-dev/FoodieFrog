@@ -10,9 +10,8 @@ export async function POST(req) {
   let event;
 
   try {
-    // For local development, we'll skip signature verification or use a test secret
     if (process.env.NODE_ENV === 'development') {
-      // In development, we can parse without verification or use a test secret
+
       try {
         event = stripe.webhooks.constructEvent(
           payload,
@@ -20,7 +19,7 @@ export async function POST(req) {
           process.env.STRIPE_WEBHOOK_SECRET || 'whsec_test'
         );
       } catch (error) {
-        // If verification fails, try to parse the JSON directly for local testing
+
         console.log('Webhook verification failed, parsing JSON directly for development');
         event = JSON.parse(payload);
       }
@@ -35,7 +34,7 @@ export async function POST(req) {
   } catch (error) {
     console.error('Webhook signature verification failed:', error);
     
-    // For development, we might want to proceed anyway
+    // For development
     if (process.env.NODE_ENV === 'development') {
       console.log('Proceeding with unverified webhook in development mode');
       event = JSON.parse(payload);
