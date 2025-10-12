@@ -73,7 +73,7 @@ export async function POST(req) {
       deliveryTime: deliveryTime || '30-45 min',
       deliveryFee: deliveryFee || 2.99,
       minimumOrder: minimumOrder || 0,
-      image: image || '',
+      image: image || '', // This will be the Cloudinary URL
       ownerId: session.user.id,
       ownerEmail: session.user.email,
       role: 'restaurant',

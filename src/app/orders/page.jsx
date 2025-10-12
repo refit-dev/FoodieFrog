@@ -104,7 +104,7 @@ export default function OrdersPage() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-black py-8">
         <div className="container mx-auto px-4">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
@@ -122,11 +122,11 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen pt-[74px] bg-gray-50 dark:bg-black py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Orders</h1>
-          <p className="text-gray-600 mt-2">Track your recent food orders</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Orders</h1>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">Track your recent food orders</p>
         </div>
 
         {/* Error Message */}
@@ -146,10 +146,10 @@ export default function OrdersPage() {
         )}
 
         {orders.length === 0 && !error ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+          <div className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 p-12 text-center">
             <div className="text-6xl mb-4">🍽️</div>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">No orders yet</h2>
-            <p className="text-gray-600 mb-6">Start by placing your first order from our restaurants!</p>
+            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">No orders yet</h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">Start by placing your first order from our restaurants!</p>
             <Link
               href="/restaurants"
               className="inline-flex items-center bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-medium"

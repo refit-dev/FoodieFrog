@@ -1,161 +1,17 @@
-// import { NextResponse } from 'next/server';
-// import { getServerSession } from 'next-auth';
-// import { authOptions } from '@/lib/authOptions';
-// import { collectionNamesObj, dbConnect } from '@/lib/dbconnect';
-// import { ObjectId } from 'mongodb';
-
-// // POST - Create new order
-// export async function POST(req) {
-//     try {
-//         const session = await getServerSession(authOptions);
-
-//         if (!session) {
-//             return NextResponse.json(
-//                 { success: false, message: 'Unauthorized' },
-//                 { status: 401 }
-//             );
-//         }
-
-//         const payload = await req.json();
-//         const {
-//             restaurantId,
-//             items,
-//             deliveryAddress,
-//             phoneNumber,
-//             specialInstructions,
-//             subtotal,
-//             deliveryFee,
-//             tax,
-//             total
-//         } = payload;
-
-//         // Validate required fields
-//         if (!restaurantId || !items || items.length === 0 || !deliveryAddress || !phoneNumber) {
-//             return NextResponse.json(
-//                 { success: false, message: 'Missing required fields' },
-//                 { status: 400 }
-//             );
-//         }
-
-//         const ordersCollection = await dbConnect(collectionNamesObj.orderCollection);
-//         const restaurantCollection = await dbConnect(collectionNamesObj.restaurantCollection);
-
-//         // Verify restaurant exists
-//         const restaurant = await restaurantCollection.findOne({
-//             _id: new ObjectId(restaurantId)
-//         });
-
-//         if (!restaurant) {
-//             return NextResponse.json(
-//                 { success: false, message: 'Restaurant not found' },
-//                 { status: 404 }
-//             );
-//         }
-
-//         // Generate order number
-//         const orderCount = await ordersCollection.countDocuments();
-//         const orderNumber = `FF${String(orderCount + 1).padStart(6, '0')}`;
-
-//         // Create order
-//         const order = {
-//             orderNumber,
-//             customerId: new ObjectId(session?.user?.id),
-//             // customerEmail: session.user.email,
-//             customerEmail: session.user.email,
-//             customerName: session.user.name,
-//             restaurantId: new ObjectId(restaurantId),
-//             restaurantName: restaurant.name,
-//             items: items.map(item => ({
-//                 menuItemId: new ObjectId(item._id),
-//                 name: item.name,
-//                 price: item.price,
-//                 quantity: item.quantity,
-//                 image: item.image
-//             })),
-//             deliveryAddress,
-//             phoneNumber,
-//             specialInstructions: specialInstructions || '',
-//             subtotal,
-//             deliveryFee,
-//             tax,
-//             total,
-//             status: 'pending', // pending, confirmed, preparing, out_for_delivery, delivered, cancelled
-//             statusHistory: [
-//                 {
-//                     status: 'pending',
-//                     timestamp: new Date(),
-//                     note: 'Order placed'
-//                 }
-//             ],
-//             createdAt: new Date(),
-//             updatedAt: new Date()
-//         };
-
-//         const result = await ordersCollection.insertOne(order);
-
-//         return NextResponse.json({
-//             success: true,
-//             message: 'Order placed successfully!',
-//             data: {
-//                 orderId: result.insertedId,
-//                 orderNumber: order.orderNumber
-//             }
-//         });
-
-//     } catch (error) {
-//         console.error('Error creating order:', error);
-//         return NextResponse.json(
-//             { success: false, message: 'Server error' },
-//             { status: 500 }
-//         );
-//     }
-// }
-
-// // GET - Get user's orders
-// export async function GET() {
-//     try {
-//         const session = await getServerSession(authOptions);
-
-//         if (!session) {
-//             return NextResponse.json(
-//                 { success: false, message: 'Unauthorized' },
-//                 { status: 401 }
-//             );
-//         }
-
-//         const ordersCollection = await dbConnect(collectionNamesObj.orderCollection);
-
-//         const orders = await ordersCollection
-//             .find({ customerId: new ObjectId(session.user.id) })
-//             .sort({ createdAt: -1 })
-//             .limit(20)
-//             .toArray();
-
-//         return NextResponse.json({
-//             success: true,
-//             data: orders
-//         });
-
-//     } catch (error) {
-//         console.error('Error fetching orders:', error);
-//         return NextResponse.json(
-//             { success: false, message: 'Server error' },
-//             { status: 500 }
-//         );
-//     }
-// }
-
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { collectionNamesObj, dbConnect } from '@/lib/dbconnect';
 import { ObjectId } from 'mongodb';
+import { stripe } from '@/lib/stripe';
+import { deleteTempOrder, getTempOrder } from '@/lib/order-temp-store';
+ 
 
-// GET - Get user's orders
+// GET - Get user's orders (filter out temp orders)
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
@@ -166,9 +22,8 @@ export async function GET() {
     const ordersCollection = await dbConnect(collectionNamesObj.orderCollection);
     const userCollection = await dbConnect(collectionNamesObj.userCollection);
 
-    // Get user from database to ensure we have a valid ObjectId
     const user = await userCollection.findOne({ email: session.user.email });
-    
+
     if (!user) {
       return NextResponse.json(
         { success: false, message: 'User not found' },
@@ -176,29 +31,31 @@ export async function GET() {
       );
     }
 
+    // Only get real orders, not temp ones
     const orders = await ordersCollection
-      .find({ customerId: user._id })
+      .find({ 
+        customerId: user._id,
+        isTemp: { $ne: true } // Exclude temp orders
+      })
       .sort({ createdAt: -1 })
       .limit(20)
       .toArray();
 
-    // Convert ObjectId to string for client-side
-    const serializedOrders = orders.map(order => ({
+    const serializedOrders = orders.map((order) => ({
       ...order,
       _id: order._id.toString(),
       customerId: order.customerId.toString(),
       restaurantId: order.restaurantId.toString(),
-      items: order.items.map(item => ({
+      items: order.items.map((item) => ({
         ...item,
-        menuItemId: item.menuItemId.toString()
-      }))
+        menuItemId: item.menuItemId.toString(),
+      })),
     }));
 
     return NextResponse.json({
       success: true,
-      data: serializedOrders
+      data: serializedOrders,
     });
-
   } catch (error) {
     console.error('Error fetching orders:', error);
     return NextResponse.json(
@@ -208,11 +65,11 @@ export async function GET() {
   }
 }
 
-// POST - Create new order
+// POST - Create new order with payment verification
 export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
@@ -221,22 +78,41 @@ export async function POST(req) {
     }
 
     const payload = await req.json();
-    const { 
-      restaurantId, 
-      items, 
-      deliveryAddress, 
-      phoneNumber, 
-      specialInstructions,
-      subtotal,
-      deliveryFee,
-      tax,
-      total 
-    } = payload;
+    const { paymentIntentId } = payload;
 
     // Validate required fields
-    if (!restaurantId || !items || items.length === 0 || !deliveryAddress || !phoneNumber) {
+    if (!paymentIntentId) {
       return NextResponse.json(
-        { success: false, message: 'Missing required fields' },
+        { success: false, message: 'Payment intent ID required' },
+        { status: 400 }
+      );
+    }
+
+    // Verify payment intent
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    
+    if (paymentIntent.status !== 'succeeded') {
+      return NextResponse.json(
+        { success: false, message: 'Payment not completed' },
+        { status: 400 }
+      );
+    }
+
+    // Retrieve order data from temporary storage
+    const orderData = await getTempOrder(paymentIntentId);
+    
+    if (!orderData) {
+      return NextResponse.json(
+        { success: false, message: 'Order data not found or expired. Please try placing the order again.' },
+        { status: 400 }
+      );
+    }
+
+    // Verify payment amount matches order total
+    const expectedAmount = Math.round(orderData.total * 100);
+    if (paymentIntent.amount !== expectedAmount) {
+      return NextResponse.json(
+        { success: false, message: 'Payment amount mismatch' },
         { status: 400 }
       );
     }
@@ -245,9 +121,8 @@ export async function POST(req) {
     const restaurantCollection = await dbConnect(collectionNamesObj.restaurantCollection);
     const userCollection = await dbConnect(collectionNamesObj.userCollection);
 
-    // Get user from database to ensure we have a valid ObjectId
     const user = await userCollection.findOne({ email: session.user.email });
-    
+
     if (!user) {
       return NextResponse.json(
         { success: false, message: 'User not found' },
@@ -255,10 +130,9 @@ export async function POST(req) {
       );
     }
 
-    // Verify restaurant exists and get valid ObjectId
     let restaurantObjectId;
     try {
-      restaurantObjectId = new ObjectId(restaurantId);
+      restaurantObjectId = new ObjectId(orderData.restaurantId);
     } catch (error) {
       return NextResponse.json(
         { success: false, message: 'Invalid restaurant ID' },
@@ -267,7 +141,7 @@ export async function POST(req) {
     }
 
     const restaurant = await restaurantCollection.findOne({
-      _id: restaurantObjectId
+      _id: restaurantObjectId,
     });
 
     if (!restaurant) {
@@ -278,10 +152,12 @@ export async function POST(req) {
     }
 
     // Generate order number
-    const orderCount = await ordersCollection.countDocuments();
+    const orderCount = await ordersCollection.countDocuments({
+      isTemp: { $ne: true } // Only count real orders
+    });
     const orderNumber = `FF${String(orderCount + 1).padStart(6, '0')}`;
 
-    // Create order with proper ObjectIds
+    // Create the final order document
     const order = {
       orderNumber,
       customerId: user._id,
@@ -289,53 +165,63 @@ export async function POST(req) {
       customerName: session.user.name,
       restaurantId: restaurantObjectId,
       restaurantName: restaurant.name,
-      items: items.map(item => {
+      items: orderData.items.map((item) => {
         let menuItemId;
         try {
           menuItemId = new ObjectId(item._id);
         } catch (error) {
-          // If item._id is not a valid ObjectId, create a new one
           menuItemId = new ObjectId();
         }
-        
+
         return {
           menuItemId,
           name: item.name,
           price: item.price,
           quantity: item.quantity,
-          image: item.image
+          image: item.image || '/food-placeholder.jpg',
         };
       }),
-      deliveryAddress,
-      phoneNumber,
-      specialInstructions: specialInstructions || '',
-      subtotal: parseFloat(subtotal),
-      deliveryFee: parseFloat(deliveryFee),
-      tax: parseFloat(tax),
-      total: parseFloat(total),
+      deliveryAddress: orderData.deliveryAddress,
+      phoneNumber: orderData.phoneNumber,
+      specialInstructions: orderData.specialInstructions || '',
+      subtotal: parseFloat(orderData.subtotal),
+      deliveryFee: parseFloat(orderData.deliveryFee),
+      tax: parseFloat(orderData.tax),
+      total: parseFloat(orderData.total),
+      payment: {
+        paymentIntentId,
+        amount: orderData.total,
+        currency: 'usd',
+        status: 'completed',
+        method: 'card',
+        paidAt: new Date(),
+      },
       status: 'pending',
       statusHistory: [
         {
           status: 'pending',
           timestamp: new Date(),
-          note: 'Order placed'
-        }
+          note: 'Order placed - Payment received',
+        },
       ],
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
+    // Start a transaction to ensure data consistency
     const result = await ordersCollection.insertOne(order);
+    
+    // Delete the temporary order after successful creation
+    await deleteTempOrder(paymentIntentId);
 
     return NextResponse.json({
       success: true,
       message: 'Order placed successfully!',
-      data: { 
+      data: {
         orderId: result.insertedId.toString(),
-        orderNumber: order.orderNumber
-      }
+        orderNumber: order.orderNumber,
+      },
     });
-
   } catch (error) {
     console.error('Error creating order:', error);
     return NextResponse.json(

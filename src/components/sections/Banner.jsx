@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Lobster } from "next/font/google";
+import { Bike } from "lucide-react";
+import Link from "next/link";
 const lobster = Lobster({ subsets: ["latin"], weight: ["400"] });
 
 const Banner = () => {
@@ -11,7 +13,7 @@ const Banner = () => {
       </h1>
 
       {/* Left text section */}
-      <div className="flex flex-col-reverse gap-5 justify-between items-center md:flex-row">
+      <div className="flex flex-col-reverse container mx-auto gap-5 md:justify-between items-center md:flex-row">
         <div className="relative z-10 text-white max-w-xl">
           <h2
             className={`${lobster.className} text-5xl lg:text-7xl font-bold leading-tight mb-6`}
@@ -23,36 +25,17 @@ const Banner = () => {
             queues. No stress.
           </p>
 
-          {/* Reviews / rating section */}
-          <div className="flex items-center gap-8 md:gap-3">
-            <div className="flex -space-x-2">
-              <Image
-                src="/images/user1.jpg"
-                alt="user1"
-                width={40}
-                height={40}
-                className="rounded-full border-2 border-white object-cover"
-              />
-              <Image
-                src="/images/user2.jpg"
-                alt="user2"
-                width={40}
-                height={40}
-                className="rounded-full border-2 border-white object-cover"
-              />
-              <div className="w-10 hidden h-10 bg-white text-green-700 font-bold rounded-full md:flex items-center justify-center border-2 border-white">
-                +
-              </div>
-            </div>
-            <div>
-              <div className="flex text-yellow-400 text-lg">★★★★★</div>
-              <p className="text-sm text-gray-100">
-                Trusted delivery for healthy living!
-              </p>
-            </div>
+          {/* Order Now Button */}
+          <div className="relative inline-block group">
+            <Link
+              href={"/restaurants"}
+              className="relative z-10 flex items-center gap-2 px-8 py-3 text-lg font-semibold text-black bg-white rounded-full transition-all duration-300 hover:bg-transparent hover:text-white border-2 border-white"
+            >
+              <Bike className="w-5 h-5" />
+              <span>Order Now</span>
+            </Link>
           </div>
         </div>
-
         {/* Right burger image */}
         <div className="relative z-10 mt-10 lg:mt-0">
           <Image

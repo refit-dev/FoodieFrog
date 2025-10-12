@@ -16,7 +16,7 @@ export async function PUT(req, { params }) {
       );
     }
 
-    const { id } =await params;
+    const { id } = await params;
     const payload = await req.json();
     
     const menuCollection = await dbConnect(collectionNamesObj.menuCollection);

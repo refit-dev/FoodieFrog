@@ -38,7 +38,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                href="/restaurant"
+                href="/restaurants"
                 className="hover:text-green-400 transition"
               >
                 Restaurant

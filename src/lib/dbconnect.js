@@ -32,8 +32,8 @@ if (process.env.NODE_ENV === "development") {
 export const collectionNamesObj = {
   userCollection: "users",
   restaurantCollection: "restaurants",
-  menuCollection: "menuitems",
-  orderCollection: "orders",
+  // menuCollection: "menuitems",
+  // orderCollection: "orders",
   menuCollection: "menus",
   orderCollection: "orders",
   categoryCollection: "categories"
