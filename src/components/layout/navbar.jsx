@@ -218,13 +218,13 @@ export function Navbar() {
                     <Link href="/admin/dashboard">Admin Dashboard</Link>
                   </DropdownMenuItem>
                 )}
-                {session.user?.role === 'restaurant' && (
+                {/* {session.user?.role === 'restaurant' && (
                   <DropdownMenuItem asChild>
                     <Link href="/restaurant/dashboard">
-                      Restaurant Dashboard
+                      Restaurant Dashboardd
                     </Link>
                   </DropdownMenuItem>
-                )}
+                )} */}
                 {session.user?.role === 'customer' && (
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard">Customer Dashboard</Link>
