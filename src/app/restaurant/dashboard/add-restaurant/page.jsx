@@ -152,11 +152,11 @@ export default function AddRestaurantPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+      <div className="my-8">
+        <h1 className="text-3xl font-bold text-gray-900 text-center">
           {existingRestaurant ? 'Edit Restaurant' : 'Add Your Restaurant'}
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-600 mt-2 text-center">
           {existingRestaurant 
             ? 'Update your restaurant information' 
             : 'Complete your restaurant profile to start receiving orders'
@@ -164,7 +164,7 @@ export default function AddRestaurantPage() {
         </p>
       </div>
 
-      <div className="bg-white shadow-sm rounded-lg p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6 max-w-6xl mx-auto">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
