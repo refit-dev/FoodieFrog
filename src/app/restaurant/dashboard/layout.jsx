@@ -70,7 +70,7 @@ export default function RestaurantDashboardLayout({ children }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Mobile menu overlay */}
+      {/* Mobile menu overlay for hiding content */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
