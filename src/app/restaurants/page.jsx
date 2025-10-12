@@ -43,7 +43,7 @@ export default function RestaurantsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen  bg-gray-50 py-8">
+      <div className="min-h-screen dark:bg-gray-black  bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>

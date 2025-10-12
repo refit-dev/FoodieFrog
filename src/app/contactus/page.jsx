@@ -54,7 +54,7 @@ export default function ContactUs() {
     lng: 90.4125,
   };
   return (
-    <div>
+    <div className="pt-[64px]">
       {/* top section with bg */}
       <div className="relative min-h-[70vh] max-h-[75vh] bg-[url(/contact.jpg)] bg-cover bg-center flex justify-center items-center">
         {/* Dark gradient overlay */}
