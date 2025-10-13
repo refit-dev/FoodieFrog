@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Clock, CheckCircle, Truck, Utensils, XCircle, AlertCircle } from 'lucide-react';
+import { Clock, CheckCircle, Truck, Utensils, XCircle, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function OrdersPage() {
   const { data: session, status } = useSession();
@@ -12,6 +12,10 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const ORDERS_PER_PAGE = 5;
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -43,6 +47,7 @@ export default function OrdersPage() {
       
       if (data.success) {
         setOrders(data.data);
+        setTotalPages(Math.ceil(data.data.length / ORDERS_PER_PAGE));
       } else {
         throw new Error(data.message || 'Failed to fetch orders');
       }
@@ -52,6 +57,27 @@ export default function OrdersPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Get current orders to display
+  const indexOfLastOrder = currentPage * ORDERS_PER_PAGE;
+  const indexOfFirstOrder = indexOfLastOrder - ORDERS_PER_PAGE;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   const getStatusIcon = (status) => {
@@ -158,79 +184,161 @@ export default function OrdersPage() {
             </Link>
           </div>
         ) : (
-          <div className="space-y-6">
-            {orders.map(order => (
-              <div key={order._id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                {/* Order Header */}
-                <div className="p-6 border-b border-gray-200">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        Order #{order.orderNumber}
-                      </h3>
-                      <p className="text-gray-600 mt-1">{order.restaurantName}</p>
-                    </div>
-                    <div className="flex items-center space-x-2 mt-2 sm:mt-0">
-                      {getStatusIcon(order.status)}
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
-                        {order.status.replace(/_/g, ' ').toUpperCase()}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Placed on {formatDate(order.createdAt)}
-                  </p>
-                </div>
+          <>
+            {/* Orders Count and Pagination Info */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+              <p className="text-gray-600 dark:text-gray-400 mb-2 sm:mb-0">
+                Showing {currentOrders.length} of {orders.length} orders
+              </p>
+              <p className="text-gray-600 dark:text-gray-400">
+                Page {currentPage} of {totalPages}
+              </p>
+            </div>
 
-                {/* Order Items */}
-                <div className="p-6 border-b border-gray-200">
-                  <div className="space-y-3">
-                    {order.items.map((item, index) => (
-                      <div key={index} className="flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <img
-                            src={item.image || '/food-placeholder.jpg'}
-                            alt={item.name}
-                            className="h-12 w-12 object-cover rounded"
-                          />
-                          <div>
-                            <h4 className="font-medium text-gray-900">{item.name}</h4>
-                            <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
-                          </div>
-                        </div>
-                        <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+            {/* Orders List */}
+            <div className="space-y-6 mb-8">
+              {currentOrders.map(order => (
+                <div key={order._id} className="bg-white dark:bg-[#171717] rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 overflow-hidden">
+                  {/* Order Header */}
+                  <div className="p-6 border-b border-gray-200 dark:border-gray-600">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                          Order #{order.orderNumber}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 mt-1">{order.restaurantName}</p>
                       </div>
-                    ))}
+                      <div className="flex items-center space-x-2 mt-2 sm:mt-0">
+                        {getStatusIcon(order.status)}
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
+                          {order.status.replace(/_/g, ' ').toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                      Placed on {formatDate(order.createdAt)}
+                    </p>
+                  </div>
+
+                  {/* Order Items */}
+                  <div className="p-6 border-b border-gray-200 dark:border-gray-600">
+                    <div className="space-y-3">
+                      {order.items.map((item, index) => (
+                        <div key={index} className="flex justify-between items-center">
+                          <div className="flex items-center space-x-3">
+                            <img
+                              src={item.image || '/food-placeholder.jpg'}
+                              alt={item.name}
+                              className="h-12 w-12 object-cover rounded"
+                            />
+                            <div>
+                              <h4 className="font-medium text-gray-900 dark:text-white">{item.name}</h4>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">Qty: {item.quantity}</p>
+                            </div>
+                          </div>
+                          <span className="font-medium text-gray-900 dark:text-white">${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Order Footer */}
+                  <div className="p-6">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                      <div className="mb-4 lg:mb-0">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">Delivery to: {order.deliveryAddress}</p>
+                        {order.specialInstructions && (
+                          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                            Instructions: {order.specialInstructions}
+                          </p>
+                        )}
+                      </div>
+                      <div className="text-left lg:text-right">
+                        <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                          Total: ${order.total.toFixed(2)}
+                        </p>
+                        <Link
+                          href={`/orders/${order._id}`}
+                          className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm mt-1"
+                        >
+                          View Order Details →
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                {/* Order Footer */}
-                <div className="p-6">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm text-gray-600">Delivery to: {order.deliveryAddress}</p>
-                      {order.specialInstructions && (
-                        <p className="text-sm text-gray-600 mt-1">
-                          Instructions: {order.specialInstructions}
-                        </p>
-                      )}
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg font-semibold text-gray-900">
-                        Total: ${order.total.toFixed(2)}
-                      </p>
-                      <Link
-                        href={`/orders/${order._id}`}
-                        className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm mt-1"
-                      >
-                        View Order Details →
-                      </Link>
-                    </div>
-                  </div>
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Showing {indexOfFirstOrder + 1}-{Math.min(indexOfLastOrder, orders.length)} of {orders.length} orders
+                </div>
+                
+                <div className="flex justify-center items-center space-x-2">
+                  <button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 1}
+                    className={`p-2 rounded-lg border ${
+                      currentPage === 1
+                        ? 'text-gray-400 border-gray-300 cursor-not-allowed'
+                        : 'text-gray-700 border-gray-300 hover:bg-gray-50 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+
+                  {[...Array(totalPages)].map((_, index) => {
+                    const pageNumber = index + 1;
+                    // Show first page, last page, current page, and pages around current page
+                    if (
+                      pageNumber === 1 ||
+                      pageNumber === totalPages ||
+                      (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                    ) {
+                      return (
+                        <button
+                          key={pageNumber}
+                          onClick={() => handlePageClick(pageNumber)}
+                          className={`px-3 py-2 rounded-lg border text-sm font-medium ${
+                            currentPage === pageNumber
+                              ? 'bg-green-500 text-white border-green-500'
+                              : 'text-gray-700 border-gray-300 hover:bg-gray-50 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-800'
+                          }`}
+                        >
+                          {pageNumber}
+                        </button>
+                      );
+                    } else if (
+                      pageNumber === currentPage - 2 ||
+                      pageNumber === currentPage + 2
+                    ) {
+                      return (
+                        <span key={pageNumber} className="px-2 text-gray-500">
+                          ...
+                        </span>
+                      );
+                    }
+                    return null;
+                  })}
+
+                  <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages}
+                    className={`p-2 rounded-lg border ${
+                      currentPage === totalPages
+                        ? 'text-gray-400 border-gray-300 cursor-not-allowed'
+                        : 'text-gray-700 border-gray-300 hover:bg-gray-50 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </div>

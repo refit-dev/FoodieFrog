@@ -46,7 +46,7 @@ export default function CustomerDashboard() {
       const ordersData = ordersText ? JSON.parse(ordersText) : { success: false };
 
       if (ordersData.success) {
-        setRecentOrders(ordersData.data);
+         setRecentOrders(ordersData.data.slice(0, 5));
       }
 
       // Fetch user stats
@@ -328,7 +328,7 @@ export default function CustomerDashboard() {
                 </Link>
 
                 <button
-                  onClick={() => router.push('/restaurants?favorites=true')}
+                  onClick={() => router.push('/favrestaurants')}
                   className="flex flex-col items-center p-4 border border-gray-200 dark:border-gray-500 dark:hover:bg-gray-800 rounded-lg hover:border-red-300 hover:bg-red-50 transition-colors text-center"
                 >
                   <div className="p-3 bg-red-100 rounded-lg mb-3">

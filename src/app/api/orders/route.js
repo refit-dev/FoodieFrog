@@ -5,7 +5,6 @@ import { collectionNamesObj, dbConnect } from '@/lib/dbconnect';
 import { ObjectId } from 'mongodb';
 import { stripe } from '@/lib/stripe';
 import { deleteTempOrder, getTempOrder } from '@/lib/order-temp-store';
- 
 
 // GET - Get user's orders (filter out temp orders)
 export async function GET() {
@@ -38,7 +37,7 @@ export async function GET() {
         isTemp: { $ne: true } // Exclude temp orders
       })
       .sort({ createdAt: -1 })
-      .limit(20)
+      .limit(50) // Increased limit to accommodate pagination
       .toArray();
 
     const serializedOrders = orders.map((order) => ({

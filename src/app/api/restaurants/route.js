@@ -17,7 +17,8 @@ export async function GET() {
         minimumOrder: 1,
         'address.city': 1
       })
-      .limit(50)
+      .sort({ rating: -1, name: 1 }) // Added sorting for better user experience
+      .limit(100) // Increased limit to accommodate pagination needs
       .toArray();
 
     return NextResponse.json({ success: true, data: restaurants });

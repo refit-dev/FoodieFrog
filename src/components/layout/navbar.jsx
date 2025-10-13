@@ -86,7 +86,7 @@ export function Navbar() {
     const activeStyles = isActive
       ? "text-yellow-400 dark:text-green-400 font-bold"
       : "hover:text-green-500 dark:hover:text-green-500 text-black , dark:text-white";
-       
+
     return cn(baseStyles, activeStyles);
   };
 
@@ -180,8 +180,8 @@ export function Navbar() {
   return (
     <nav
       className={`fixed w-full top-0 z-50 transition-colors duration-300  ${isScrolled
-          ? 'bg-white dark:bg-black dark:text-white text-black shadow-md'
-          : 'bg-transparent text-white'
+        ? 'bg-white dark:bg-black dark:text-white text-black shadow-md'
+        : 'bg-transparent text-white'
         }`}
     >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -238,8 +238,15 @@ export function Navbar() {
                 <DropdownMenuItem asChild className={isActiveRoute('/profile') ? 'bg-muted' : ''}>
                   <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild className={isActiveRoute('/orders') ? 'bg-muted' : ''}>
-                  <Link href="/orders">My Orders</Link>
+                <DropdownMenuItem
+                  asChild
+                  className={isActiveRoute(
+                   isRestaurant ? '/restaurant/dashboard/orders' : '/orders'
+                  ) ? 'bg-muted' : ''}
+                >
+                  <Link href={isRestaurant ? '/restaurant/dashboard/orders' : '/orders'}>
+                    My Orders
+                  </Link>
                 </DropdownMenuItem>
 
                 {session.user?.role === 'admin' && (
@@ -247,8 +254,11 @@ export function Navbar() {
                     <Link href="/admin/dashboard">Admin Dashboard</Link>
                   </DropdownMenuItem>
                 )}
-                {session.user?.role === 'customer' && (
-                  <DropdownMenuItem asChild className={isActiveRoute('/dashboard') ? 'bg-muted' : ''}>
+                {session.user?.role === 'customer' && !isRestaurant && (
+                  <DropdownMenuItem
+                    asChild
+                    className={isActiveRoute('/dashboard') ? 'bg-muted' : ''}
+                  >
                     <Link href="/dashboard">Customer Dashboard</Link>
                   </DropdownMenuItem>
                 )}
