@@ -219,7 +219,7 @@ export default function OrdersPage() {
                             <img
                               src={item.image || '/food-placeholder.jpg'}
                               alt={item.name}
-                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                              className="w-full  h-96 object-cover hover:scale-105 transition-transform duration-300"
                             />
                             {order.items.length > 4 && index === 3 && (
                               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
