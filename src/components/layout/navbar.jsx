@@ -372,7 +372,7 @@ export function Navbar() {
                   signOut({ callbackUrl: '/' });
                   setMobileOpen(false);
                 }}
-                className="text-red-600 px-2 py-1 hover:bg-red-100 dark:hover:bg-red-900 rounded text-left w-full text-center"
+                className="text-red-600 px-2 py-1 hover:bg-red-100 dark:hover:bg-red-900 rounded  w-full text-center"
               >
                 Sign Out
               </button>

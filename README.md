@@ -1,299 +1,178 @@
-# DAY - 2
-FoodieFrog - Food Delivery Platform 
+# 🐸 FoodieFrog - Food Delivery Platform ( Team 3 )
 
-🐸 Project Overview
-FoodieFrog is a modern food delivery platform built with Next.js, featuring restaurant listings, cart functionality, order tracking, payment integration, and admin dashboard capabilities.
+A modern, full-stack food delivery platform built with Next.js 15, featuring real-time order tracking, secure payments, and comprehensive restaurant management.
 
-🚀 What's Been Implemented So Far
-✅ Project Setup & Configuration
-Next.js 14 project with App Router
+![FoodieFrog]( https://foodie-frog.vercel.app/ )
 
-JavaScript configuration
 
-Tailwind CSS for styling
+## 🚀 Features
 
-shadcn/ui component library integration
+### 🍕 For Customers
+- **Restaurant & Food Discovery** - Browse through restaurants with filtering
+- **Smart Shopping Cart** - Add items from  restaurants with real-time calculations
+- **Real-time Order Tracking** - Live updates from kitchen to doorstep
+- **Secure Payments** - Stripe integration with multiple payment methods
+- **User Profiles** - Order history,Track  recent food orders
 
-Dark/Light Theme System with next-themes
+### 🏪 For Restaurants
+- **Restaurant Dashboard** - Manage menu, orders, and business information
+- **Order Management** - Update order status (pending → preparing → delivered)
+- **Performance Analytics** - Sales data and customer insights
+- **Menu Management** - Add, edit, and organize food items with categories
 
-Responsive design setup
 
-✅ Installed shadcn/ui Components
-Button - Various button variants (default, secondary, destructive, outline, ghost)
 
-Card - Container components with header, title, and content
+## 🛠 Tech Stack
 
-Input - Form input fields
+### Frontend
+- **Next.js 15** - React framework with App Router
+- **React 19** - Latest React with concurrent features
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **shadcn/ui** - Reusable component library
+- **JavaScript** - Type-safe development
 
-Label - Form labels for accessibility
+### Backend
+- **Next.js API Routes** - Full-stack capabilities
+- **MongoDB with Mongoose** - Database and ODM
+- **NextAuth.js** - Authentication system
+- **Stripe** - Payment processing
+- **Cloudinary** - Image and media management
 
-DropdownMenu - For theme toggle and navigation menus
+### Additional Libraries
+- **React Fast Marquee** - Smooth scrolling animations
+- **Swiper** - Touch slider components
+- **Lottie React** - Animation integration
+- **Google Maps API** - Location services
+- **SweetAlert2** - Beautiful alert dialogs
 
-✅ Theme System Implementation
+## 📁 Project Structure
 
-✅ Page Structure
-Homepage (/) - Landing page with platform overview
-
-Test Page (/test) - Component demonstration and testing
-
-Layout - Consistent navigation with theme toggle
-
-Navbar Component - Reusable navigation with theme controls
-
-✅ Features Implemented
-Basic Testing with test routes 
-
+```
 foodie-frog/
-├── 📁 app/
-│   ├── 📁 (auth)/
-│   │   ├── 📁 login/
-│   │   │   └── 📄 page.jsx
-│   │   ├── 📁 register/
-│   │   │   └── 📄 page.jsx
-│   │   └── 📁 restaurant-register/
-│   │       └── 📄 page.jsx
-│   │
-│   ├── 📁 dashboard/
-│   │   ├── 📁 admindashboard/
-│   │   │   ├── 📁 analytics/
-│   │   │   │   └── 📄 page.jsx
-│   │   │   ├── 📁 manage-restaurants/
-│   │   │   │   ├── 📄 page.jsx
-│   │   │   │   └── 📁 [id]/
-│   │   │   │       └── 📄 page.jsx
-│   │   │   ├── 📁 manage-orders/
-│   │   │   │   ├── 📄 page.jsx
-│   │   │   │   └── 📁 [id]/
-│   │   │   │       └── 📄 page.jsx
-│   │   │   └── 📁 manage-users/
-│   │   │       └── 📄 page.jsx
-│   │   │
-│   │   ├── 📁 userdashboard/
-│   │   │   ├── 📁 orders/
-│   │   │   │   ├── 📄 page.jsx
-│   │   │   │   └── 📁 [id]/
-│   │   │   │       └── 📄 page.jsx
-│   │   │   ├── 📁 profile/
-│   │   │   │   └── 📄 page.jsx
-│   │   │   ├── 📁 addresses/
-│   │   │   │   └── 📄 page.jsx
-│   │   │   └── 📄 layout.jsx
-│   │   │
-│   │   └── 📁 restaurantdashboard/
-│   │       ├── 📁 menu/
-│   │       │   ├── 📄 page.jsx
-│   │       │   └── 📁 [id]/
-│   │       │       └── 📄 page.jsx
-│   │       ├── 📁 orders/
-│   │       │   ├── 📄 page.jsx
-│   │       │   └── 📁 [id]/
-│   │       │       └── 📄 page.jsx
-│   │       ├── 📁 analytics/
-│   │       │   └── 📄 page.jsx
-│   │       ├── 📁 settings/
-│   │       │   └── 📄 page.jsx
-│   │       └── 📄 layout.jsx
-│   │
-│   ├── 📁 restaurants/
-│   │   ├── 📄 page.jsx
-│   │   ├── 📁 [id]/
-│   │   │   └── 📄 page.jsx
-│   │   └── 📁 search/
-│   │       └── 📄 page.jsx
-│   │
-│   ├── 📁 cart/
-│   │   ├── 📄 page.jsx
-│   │   └── 📁 checkout/
-│   │       └── 📁 [id]/
-│   │           └── 📄 page.jsx
-│   │
-│   ├── 📁 orders/
-│   │   ├── 📁 tracking/
-│   │   │   └── 📁 [id]/
-│   │   │       └── 📄 page.jsx
-│   │   └── 📁 history/
-│   │       └── 📄 page.jsx
-│   │
-│   ├── 📁 api/
-│   │   ├── 📁 auth/
-│   │   │   └── 📁 [...nextauth]/
-│   │   │       └── 📄 route.js
-│   │   ├── 📁 admin/
-│   │   │   ├── 📁 restaurants/
-│   │   │   │   └── 📄 route.js
-│   │   │   ├── 📁 orders/
-│   │   │   │   └── 📄 route.js
-│   │   │   └── 📁 users/
-│   │   │       └── 📄 route.js
-│   │   ├── 📁 restaurants/
-│   │   │   ├── 📄 route.js
-│   │   │   └── 📁 [id]/
-│   │   │       ├── 📄 route.js
-│   │   │       └── 📁 menu/
-│   │   │           └── 📄 route.js
-│   │   ├── 📁 menu/
-│   │   │   ├── 📄 route.js
-│   │   │   └── 📁 [id]/
-│   │   │       └── 📄 route.js
-│   │   ├── 📁 orders/
-│   │   │   ├── 📄 route.js
-│   │   │   └── 📁 [id]/
-│   │   │       ├── 📄 route.js
-│   │   │       └── 📁 status/
-│   │   │           └── 📄 route.js
-│   │   ├── 📁 cart/
-│   │   │   └── 📄 route.js
-│   │   ├── 📁 payments/
-│   │   │   ├── 📄 route.js
-│   │   │   ├── 📁 stripe/
-│   │   │   │   └── 📄 route.js
-│   │   │   └── 📁 sslcommerz/
-│   │   │       └── 📄 route.js
-│   │   ├── 📁 upload/
-│   │   │   └── 📄 route.js
-│   │   └── 📁 reviews/
-│   │       └── 📄 route.js
-│   │
-│   ├── 📄 layout.js
-│   ├── 📄 page.js
-│   ├── 📄 loading.jsx
-│   ├── 📄 error.js
-│   ├── 📄 ClientLayout.js
-│   └── 📄 globals.css
-│
-├── 📁 actions/
-│   ├── 📁 auth/
-│   │   ├── 📄 loginUser.js
-│   │   ├── 📄 RegisterUser.js
-│   │   └── 📄 RegisterRestaurant.js
-│   ├── 📁 orders/
-│   │   ├── 📄 createOrder.js
-│   │   ├── 📄 updateStatus.js
-│   │   └── 📄 cancelOrder.js
-│   ├── 📁 cart/
-│   │   ├── 📄 addToCart.js
-│   │   ├── 📄 updateCart.js
-│   │   └── 📄 clearCart.js
-│   └── 📁 payments/
-│       ├── 📄 createPayment.js
-│       └── 📄 verifyPayment.js
-│
-├── 📁 components/
-│   ├── 📁 ui/
-│   │   ├── 📄 Navbar.jsx
-│   │   ├── 📄 Footer.jsx
-│   │   ├── 📄 AdminNav.jsx
-│   │   ├── 📄 RestaurantNav.jsx
-│   │   ├── 📄 UserNav.jsx
-│   │   ├── 📄 ThemeToggle.jsx
-│   │   ├── 📄 SearchBar.jsx
-│   │   └── 📄 LoadingSpinner.jsx
-│   │
-│   ├── 📁 restaurant/
-│   │   ├── 📄 RestaurantCard.jsx
-│   │   ├── 📄 RestaurantList.jsx
-│   │   ├── 📄 RestaurantDetail.jsx
-│   │   └── 📄 SearchFilters.jsx
-│   │
-│   ├── 📁 menu/
-│   │   ├── 📄 FoodCard.jsx
-│   │   ├── 📄 MenuCategory.jsx
-│   │   ├── 📄 MenuList.jsx
-│   │   └── 📄 FoodModal.jsx
-│   │
-│   ├── 📁 cart/
-│   │   ├── 📄 CartItem.jsx
-│   │   ├── 📄 CartSidebar.jsx
-│   │   ├── 📄 CartSummary.jsx
-│   │   └── 📄 CartBadge.jsx
-│   │
-│   ├── 📁 orders/
-│   │   ├── 📄 OrderCard.jsx
-│   │   ├── 📄 OrderList.jsx
-│   │   ├── 📄 OrderDetail.jsx
-│   │   ├── 📄 OrderTracking.jsx
-│   │   └── 📄 StatusBadge.jsx
-│   │
-│   ├── 📁 checkout/
-│   │   ├── 📄 CheckoutForm.jsx
-│   │   ├── 📄 PaymentMethod.jsx
-│   │   ├── 📄 AddressForm.jsx
-│   │   └── 📄 OrderSummary.jsx
-│   │
-│   ├── 📁 forms/
-│   │   ├── 📄 RestaurantForm.jsx
-│   │   ├── 📄 MenuItemForm.jsx
-│   │   ├── 📄 AddressForm.jsx
-│   │   └── 📄 ReviewForm.jsx
-│   │
-│   └── 📄 VideoPlayer.jsx (for restaurant promos)
-│
-├── 📁 hooks/
-│   ├── 📄 use-cart.js
-│   ├── 📄 use-orders.js
-│   ├── 📄 use-restaurants.js
-│   ├── 📄 use-auth.js
-│   └── 📄 use-mobile.js
-│
-├── 📁 lib/
-│   ├── 📄 authOptions.js
-│   ├── 📄 dbconnect.js
-│   ├── 📄 utils.js
-│   ├── 📄 stripe.js
-│   ├── 📄 sslcommerz.js
-│   └── 📄 validations.js
-│
-├── 📁 store/ (Zustand stores)
-│   ├── 📄 cart-store.js
-│   ├── 📄 auth-store.js
-│   ├── 📄 restaurant-store.js
-│   └── 📄 ui-store.js
-│
-├── 📁 providers/
-│   └── 📄 NextAuthProvider.jsx
-│
-├── 📁 assets/
-│   ├── 📁 images/
-│   │   ├── 📁 restaurants/
-│   │   ├── 📁 foods/
-│   │   └── 📁 icons/
-│   └── 📁 promos/
-│
-├── 📁 middleware/
-│   └── 📄 auth.js
-│
-├── 📄 components.json
-├── 📄 next.config.mjs
-├── 📄 postcss.config.mjs
-├── 📄 eslint.config.mjs
-├── 📄 jsconfig.json
-├── 📄 package.json
-├── 📄 package-lock.json
-├── 📄 README.md
-└── 📄 .env.local
+├── src/
+│   ├── app/                    # Next.js 15 App Router
+│   │   ├── api/               # API routes
+│   │   │   ├── auth/          # Authentication endpoints
+│   │   │   ├── restaurant/    # Restaurant management
+│   │   │   ├── orders/        # Order processing
+│   │   │   ├── checkout/      # Payment handling
+│   │   │   └── webhooks/      # Stripe webhooks
+│   │   ├── auth/              # Authentication pages
+│   │   ├── dashboard/         # User dashboard
+│   │   ├── restaurant-dashboard/ # Restaurant owner portal
+│   │   ├── orders/            # Order pages
+│   │   └── restaurants/       # Restaurant listings
+│   ├── components/            # Reusable components
+│   │   ├── ui/                # shadcn/ui components
+│   │   ├── layout/            # Layout components
+│   │   ├── sections/          # Page sections
+│   │   ├── cart/              # Shopping cart
+│   │   └── map/               # Map components
+│   ├── lib/                   # Utility libraries
+│   │   ├── authOptions.js     # NextAuth configuration
+│   │   ├── dbconnect.js       # Database connection
+│   │   ├── stripe.js          # Stripe configuration
+│   │   └── utils.js           # Helper functions
+│   ├── models/                # MongoDB models
+│   │   ├── User.js
+│   │   ├── Restaurant.js
+│   │   ├── MenuItem.js
+│   │   └── Order.js
+│   └── providers/             # React context providers
+│       └── NextAuthProvider.jsx
+├── public/                    # Static assets
+└── configuration files        # ESLint, Tailwind, etc.
+```
 
 
+## 📱 Key Pages & Features
+
+### Customer Experience
+- **Homepage** (`/`) - Featured restaurants, categories, and promotions
+- **Restaurant Listings** (`/restaurants`) - Browse all restaurants
+- **Restaurant Details** (`/restaurants/[id]`) - Menu and ordering
+- **Cart & Checkout** (`/checkout`) - Secure payment process
+- **Order Tracking** (`/orders/[id]`) - Real-time status updates
+- **User Profile** (`/profile`) - Account management
+
+### Restaurant Portal
+- **Dashboard** (`/restaurant-dashboard`) - Business overview
+- **Menu Management** (`/restaurant-dashboard/menu`) - Add/edit menu items
+- **Order Management** (`/restaurant-dashboard/orders`) - Process orders
+- **Restaurant Setup** (`/restaurant-dashboard/add-restaurant`) - Onboarding
+
+### Authentication
+- **User Registration** (`/auth/register`) - Customer accounts
+- **Restaurant Registration** (`/auth/restaurant-register`) - Partner onboarding
+- **Login** (`/auth/login`) - Secure authentication
+
+## 💳 Payment Integration
+
+FoodieFrog uses **Stripe** for secure payment processing:
+- Credit/Debit card payments
+- Secure tokenization
+- Webhook handling for payment confirmation
+- Refund and dispute management
+
+## 🗃 Database Models
+
+### User
+- Authentication credentials
+- Personal information
+- Order history
+- Favorite restaurants
+
+### Restaurant
+- Business information
+- Location data
+- Menu categories
+ 
+
+### MenuItem
+- Food details (name, description, price)
+- Dietary information
+- Availability status
+- Image references
+
+### Order
+- Customer information
+- Restaurant details
+- Order items and quantities
+- Payment status
+- Delivery tracking
+
+## 🎨 UI/UX Features
+
+- **Responsive Design** - Mobile-first approach
+- **Dark Mode Support** - Theme switching
+- **Loading States** - Smooth user experience
+- **Error Handling** - User-friendly error messages
+
+## 🔒 Security Features
+
+- **Password Hashing** - bcrypt for secure storage
+- **CSRF Protection** - NextAuth built-in security
+- **API Route Protection** - Server-side validation
+- **Payment Security** - PCI compliant Stripe integration
+- **Input Validation** - Client and server-side checks
+
+## 📈 Performance Optimizations
+
+- **Next.js 15** - Latest performance improvements
+- **Turbopack** - Fast development builds
+- **Image Optimization** - Next.js Image component
+- **Code Splitting** - Automatic bundle optimization
+- **SSR/SSG** - Hybrid rendering strategies
 
 
+## 🙏 Acknowledgments
 
+- Next.js team for the amazing framework
+- Vercel for hosting solutions
+- Stripe for payment infrastructure
+- MongoDB for database services
+- The open-source community
 
+---
 
-
-
-
-# Install authentication and database packages
-npm install next-auth bcrypt mongodb
-npm install -D @types/bcrypt
-
-# Install shadcn/ui components
-npx shadcn@latest add button
-npx shadcn@latest add card
-npx shadcn@latest add input
-npx shadcn@latest add label
-npx shadcn@latest add separator
-npx shadcn@latest add spinner
-npx shadcn@latest add dropdown-menu
-
-# Install additional useful packages
-npm install lucide-react sweetalert2
-npm install -D @types/sweetalert2
+**Built with ❤️ using Next.js 15 and modern web technologies**
