@@ -4,7 +4,7 @@ import FeaturesSection from "@/components/sections/FeatureSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import RestaurantCarousel from "@/components/sections/TopRatedRest";
 import BrandPartners from "@/components/sections/BrandPartners";
-import MapComponent from "@/components/Map/MapComponent";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,8 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import React from "react";
-import FoodCategoryExplorer from "@/components/Map/MapComponent";
-import FoodieCommunityFeed from "@/components/sections/FoodieCommunityFeed";
+
 import LottieSimple from "@/components/LottieSimple";
 
 const center = {
@@ -31,8 +30,8 @@ export default function Home() {
       <Banner />
       <MarqueeBanner />
       <RestaurantCarousel />
+
       <FeaturesSection />
-      <TestimonialsSection />
       <BrandPartners />
       {/* form map container */}
       <div className=" flex justify-center items-center w-full flex-col lg:flex-row p-3">
@@ -67,12 +66,13 @@ export default function Home() {
           </Card>
         </div>
 
-        {/* map */}
-        
-           <LottieSimple />
-      
+
+
+        <LottieSimple />
+
       </div>
- 
+      <TestimonialsSection />
+
     </div>
 
 

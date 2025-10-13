@@ -178,7 +178,7 @@ export default function RestaurantsPage() {
           </div>
           {session && (
             <Link
-              href="/favorites"
+              href="/favrestaurants"
               className="flex items-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
             >
               <Heart className="h-5 w-5 mr-2 fill-current" />

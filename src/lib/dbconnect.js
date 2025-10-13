@@ -35,6 +35,7 @@ export const collectionNamesObj = {
   favoriteRestaurantsCollection: "favoriteRestaurants",
   menuCollection: "menus",
   orderCollection: "orders",
+  reviewsCollection: 'reviews',
   categoryCollection: "categories"
 };
 

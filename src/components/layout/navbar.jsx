@@ -145,14 +145,24 @@ export function Navbar() {
       </Button>
       {session && (
         <>
-          <Button
-            variant="ghost"
-            asChild
-            className={getActiveStyles('/orders')}
-          >
-            <Link href="/orders">My Orders</Link>
-          </Button>
-          {session.user?.role === 'customer' && (
+           
+          {session.user?.role === 'customer' && !isRestaurant && (
+            <Button
+              variant="ghost"
+              asChild
+              className={getActiveStyles('/orders')}
+            >
+              <Link href="/orders">My Orders</Link>
+            </Button>
+          )}
+
+
+
+
+
+
+
+          {session.user?.role === 'customer' && !isRestaurant && (
             <Button
               variant="ghost"
               asChild
@@ -241,7 +251,7 @@ export function Navbar() {
                 <DropdownMenuItem
                   asChild
                   className={isActiveRoute(
-                   isRestaurant ? '/restaurant/dashboard/orders' : '/orders'
+                    isRestaurant ? '/restaurant/dashboard/orders' : '/orders'
                   ) ? 'bg-muted' : ''}
                 >
                   <Link href={isRestaurant ? '/restaurant/dashboard/orders' : '/orders'}>
