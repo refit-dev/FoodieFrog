@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useReducer, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const CartContext = createContext();
 
@@ -44,9 +45,14 @@ const cartReducer = (state, action) => {
       };
 
     case 'CLEAR_CART':
+      // Remove cart data from localStorage
+      localStorage.removeItem('cart');
+      localStorage.removeItem('restaurant');
+
       return {
         ...state,
-        items: []
+        items: [],
+        restaurant: null
       };
 
     case 'SET_RESTAURANT':
@@ -96,20 +102,49 @@ export function CartProvider({ children }) {
   const addItem = (item, restaurant) => {
     // If adding from a different restaurant, clear the cart first
     if (state.restaurant && state.restaurant._id !== restaurant._id) {
-      const confirmChange = window.confirm(
-        `Your cart contains items from ${state.restaurant.name}. Adding items from ${restaurant.name} will clear your current cart. Do you want to continue?`
-      );
-      
-      if (confirmChange) {
-        dispatch({ type: 'CLEAR_CART' });
-        dispatch({ type: 'SET_RESTAURANT', payload: restaurant });
-        dispatch({ type: 'ADD_ITEM', payload: item });
-      }
+      Swal.fire({
+        title: 'Clear Cart?',
+        html: `Your cart contains items from <strong>${state.restaurant.name}</strong>. Adding items from <strong>${restaurant.name}</strong> will clear your current cart.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, continue!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Clear localStorage
+          localStorage.removeItem('cart');
+          localStorage.removeItem('restaurant');
+
+          dispatch({ type: 'CLEAR_CART' });
+          dispatch({ type: 'SET_RESTAURANT', payload: restaurant });
+          dispatch({ type: 'ADD_ITEM', payload: item });
+
+          // Show success notification
+          Swal.fire({
+            title: 'Cart Updated!',
+            text: `Added item from ${restaurant.name}`,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        }
+      });
     } else {
       if (!state.restaurant) {
         dispatch({ type: 'SET_RESTAURANT', payload: restaurant });
       }
       dispatch({ type: 'ADD_ITEM', payload: item });
+
+      // Show success notification for same restaurant addition
+      Swal.fire({
+        title: 'Item Added!',
+        text: `${item.name} added to cart`,
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
+      });
     }
   };
 

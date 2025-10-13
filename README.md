@@ -13,6 +13,7 @@ A modern, full-stack food delivery platform built with Next.js 15, featuring rea
 - **Real-time Order Tracking** - Live updates from kitchen to doorstep
 - **Secure Payments** - Stripe integration with multiple payment methods
 - **User Profiles** - Order history,Track  recent food orders
+- **Pagination integrated** - Added Pagination for better access 
 
 ### 🏪 For Restaurants
 - **Restaurant Dashboard** - Manage menu, orders, and business information
